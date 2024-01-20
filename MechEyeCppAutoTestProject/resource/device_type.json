@@ -1,0 +1,15 @@
+{
+    "mraw": [
+        {"mraw_path": "C:\\Users\\mech-mind_lcl\\Desktop\\MechEyeAPITestProject\\MechEyeCppAutoTestProject\\resource\\test.mraw"},
+        {"model_name": "Mech-Eye LNX-8300"},
+        {"controller_sn": "LCA00237A201YD52"},
+        {"sensor_sn": "LX300236A205YE09"},
+        {"hardware_version": "5.0.0"},
+        {"firmware_version": "2.3.0"},
+        {"ip_address": "192.168.23.107"},
+        {"ip_method": "Static"},
+        {"port": "5577"},
+        {"user_set_name": "default"}
+    ]
+
+}
