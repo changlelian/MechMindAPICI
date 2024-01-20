@@ -31,7 +31,7 @@ pipeline {
                             sh 'sudo docker exec APITestCameraInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
                             sh 'sudo docker exec APITestCameraInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
                             sh 'sudo docker exec APITestCameraInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            sh 'sudo docker exec APITestCameraInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Camera* --ip=192.168.20.149'
+                            sh 'sudo docker exec APITestCameraInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Camera* --ip=192.168.20.94'
                             
                             sh 'sudo docker stop APITestCameraInterface'
                             sh 'sudo docker rm APITestCameraInterface'
@@ -75,6 +75,28 @@ pipeline {
 
         }
         }   
+    }
+
+    post {
+        always {
+            sh 'docker stop $(docker ps -q) && docker rm -f $(docker ps -aq)'
+            //sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_main/allure-results/'
+            // 将测试报告文件移动到jenkins默认的工作路径下
+            //sh 'mkdir -p allure-results && cp /home/mech_mind_sdk/MechMindSDK/GithubTestCode/APITestPy/report/*.json /var/lib/jenkins/workspace/MMIND_main/allure-results/'
+
+            // Allure 报告的生成命令
+            // allure([
+            //     includeProperties: false,
+            //     jdk: '',
+            //     properties: [],
+            //     reportBuildPolicy: 'ALWAYS',
+            //     results: [[path: '/home/mech_mind_sdk/MechMindSDK/GithubTestCode/APITestPy/report']]
+            // ])
+            
+            // sh 'sudo docker stop APITestCameraInterface && sudo docker rm APITestCameraInterface'
+            // sh 'sudo docker stop APITestPythonCameraInterface && sudo docker rm APITestPythonCameraInterface'
+
+        }
     }
 }
 
