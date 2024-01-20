@@ -16,8 +16,9 @@ pipeline {
                         sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APIBuildTest mecheyeenvimage'
                         sh 'sudo docker start APIBuildTest'
                         sh 'sudo docker exec APIBuildTest sh /home/MMIND_TEST_CI_main/MechEyeCppBuildAmd/ubuntu_build.sh'
-                        sh 'sudo docker stop APIBuildTest'
-                        sh 'sudo docker rm APIBuildTest'
+                        
+                        // sh 'sudo docker stop APIBuildTest'
+                        // sh 'sudo docker rm APIBuildTest'
                     }
                 }
             }
@@ -33,8 +34,8 @@ pipeline {
                             sh 'sudo docker exec APITestCameraInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
                             sh 'sudo docker exec APITestCameraInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Camera* --ip=192.168.20.94'
                             
-                            sh 'sudo docker stop APITestCameraInterface'
-                            sh 'sudo docker rm APITestCameraInterface'
+                            // sh 'sudo docker stop APITestCameraInterface'
+                            // sh 'sudo docker rm APITestCameraInterface'
                         }
                     }
                 }
@@ -50,8 +51,8 @@ pipeline {
                             sh 'sudo docker exec APITestProfilerInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
                             sh 'sudo docker exec APITestProfilerInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Profiler* --ip=192.168.20.217'
                             
-                            sh 'sudo docker stop APITestProfilerInterface'
-                            sh 'sudo docker rm APITestProfilerInterface'
+                            // sh 'sudo docker stop APITestProfilerInterface'
+                            // sh 'sudo docker rm APITestProfilerInterface'
                         }
                     }
                 }
@@ -67,8 +68,8 @@ pipeline {
                             sh 'sudo docker exec APITestVirtualProfilerInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
                             sh 'sudo docker exec APITestVirtualProfilerInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*ProVirtual* --ip=192.168.20.223'
                             
-                            sh 'sudo docker stop APITestVirtualProfilerInterface'
-                            sh 'sudo docker rm APITestVirtualProfilerInterface'
+                            // sh 'sudo docker stop APITestVirtualProfilerInterface'
+                            // sh 'sudo docker rm APITestVirtualProfilerInterface'
                         }
                     }
                 }
