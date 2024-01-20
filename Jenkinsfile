@@ -6,7 +6,7 @@ pipeline {
                 sh 'sudo rm -rf /home/mech_mind_sdk/MechMindSDK/GithubTestCode/* \
                                 /home/mech_mind_sdk/MechMindSDK/GithubTestCode/.git/'
 
-                sh 'git clone git@github.com:MechMindRobotics/MechEyeAPITestProject.git /home/mech_mind_sdk/MechMindSDK/GithubTestCode'
+                sh 'git clone https://github.com/changlelian/MechMindAPICI.git /home/mech_mind_sdk/MechMindSDK/GithubTestCode'
             }
         }
 
