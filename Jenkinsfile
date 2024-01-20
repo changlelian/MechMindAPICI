@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('Clone test code'){
             steps{
-                sh 'sudo rm -rf /home/mech_mind_sdk/MechMindSDK/GithubTestCode/* \
-                                /home/mech_mind_sdk/MechMindSDK/GithubTestCode/.git/'
-
-                sh 'git clone https://github.com/changlelian/MechMindAPICI.git /home/mech_mind_sdk/MechMindSDK/GithubTestCode'
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '2c5b2149-4914-4b15-bd7a-af703dddf0da', url: 'https://github.com/changlelian/MechMindAPICI.git']])
             }
         }
+
+
+
     }
 }
 
