@@ -3,12 +3,26 @@ pipeline {
     stages {
         stage('Clone test code'){
             steps{
+                docker stop $(docker ps -q) && docker stop $(docker ps -q)
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '2c5b2149-4914-4b15-bd7a-af703dddf0da', url: 'https://github.com/changlelian/MechMindAPICI.git']])
             }
         }
 
-
-
+        stage('Parallel execute Stages') {
+        parallel {
+            stage('Build cpp amd64 samples') {
+                steps {
+                    script {
+                        sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APIBuildTest mecheyeenvimage'
+                        sh 'sudo docker start APIBuildTest'
+                        // sh 'sudo docker exec APIBuildTest sh /home/GithubTestCode/ubuntu_build.sh'
+                        // sh 'sudo docker stop APIBuildTest'
+                        // sh 'sudo docker rm APIBuildTest'
+                    }
+                }
+            }
+        }
+        }   
     }
 }
 
