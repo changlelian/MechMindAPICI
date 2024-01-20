@@ -7,7 +7,7 @@ sudo dpkg -P MechEyeApi
 sudo rm -rf /opt/mech-mind
 
 
-sudo dpkg -i /home/Mech-Eye_API_2.2.1_amd64.deb
+sudo dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb
 
 # sample path 
 samples_path=/opt/mech-mind/mech-eye-sdk/samples/cpp/

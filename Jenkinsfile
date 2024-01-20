@@ -21,6 +21,23 @@ pipeline {
                     }
                 }
             }
+
+            stage('Test cpp camera interface in linux') {
+                    steps {
+                        script {
+                            sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestCameraInterface mecheyeenvimage'
+                            sh 'sudo docker start APITestCameraInterface'
+                            sh 'sudo docker exec APITestCameraInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
+                            sh 'sudo docker exec APITestCameraInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            sh 'sudo docker exec APITestCameraInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            sh 'sudo docker exec APITestCameraInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            sh 'sudo docker exec APITestCameraInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/MechEyeCppAutoTestProject --gtest_filter=*Camera* --ip=192.168.20.198'
+
+                            sh 'sudo docker stop APITestCameraInterface'
+                            sh 'sudo docker rm APITestCameraInterface'
+                        }
+                    }
+                }
         }
         }   
     }
