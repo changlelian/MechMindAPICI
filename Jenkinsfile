@@ -38,6 +38,41 @@ pipeline {
                         }
                     }
                 }
+
+            stage('Test cpp profiler interface in linux') {
+                    steps {
+                        script {
+                            sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestProfilerInterface mecheyeenvimage'
+                            sh 'sudo docker start APITestProfilerInterface'
+                            sh 'sudo docker exec APITestProfilerInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
+                            sh 'sudo docker exec APITestProfilerInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            sh 'sudo docker exec APITestProfilerInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            sh 'sudo docker exec APITestProfilerInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            sh 'sudo docker exec APITestProfilerInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Profiler* --ip=192.168.20.10'
+                            
+                            sh 'sudo docker stop APITestProfilerInterface'
+                            sh 'sudo docker rm APITestProfilerInterface'
+                        }
+                    }
+                }
+            
+                stage('Test cpp virtual profiler interface in linux') {
+                    steps {
+                        script {
+                            sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestVirtualProfilerInterface mecheyeenvimage'
+                            sh 'sudo docker start APITestVirtualProfilerInterface'
+                            sh 'sudo docker exec APITestVirtualProfilerInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
+                            sh 'sudo docker exec APITestVirtualProfilerInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            sh 'sudo docker exec APITestVirtualProfilerInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            sh 'sudo docker exec APITestVirtualProfilerInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            sh 'sudo docker exec APITestVirtualProfilerInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*ProVirtual* --ip=192.168.20.198'
+                            
+                            sh 'sudo docker stop APITestVirtualProfilerInterface'
+                            sh 'sudo docker rm APITestVirtualProfilerInterface'
+                        }
+                    }
+                }
+
         }
         }   
     }

@@ -55,7 +55,7 @@ protected:
 class ProVirtualSDKFixture:public ::testing::Test
 {
 public:
-	const std::string jsonPath = R"(C:\Users\mech-mind_lcl\Desktop\MechEyeAPITestProject\MechEyeCppAutoTestProject\resource\device_type.json)";
+	const std::string jsonPath = R"(resource/device_type.json)";
 	
 };
 
