@@ -15,7 +15,7 @@ pipeline {
                     script {
                         sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APIBuildTest mecheyeenvimage'
                         sh 'sudo docker start APIBuildTest'
-                        // sh 'sudo docker exec APIBuildTest sh /home/GithubTestCode/ubuntu_build.sh'
+                        sh 'sudo docker exec APIBuildTest sh /home/MMIND_TEST_CI_main/MechEyeCppBuildAmd/ubuntu_build.sh'
                         // sh 'sudo docker stop APIBuildTest'
                         // sh 'sudo docker rm APIBuildTest'
                     }
