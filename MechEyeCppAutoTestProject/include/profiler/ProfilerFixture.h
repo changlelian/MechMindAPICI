@@ -92,6 +92,21 @@ class ProfilerParameterGapFilling :
     public ProfilerSDKFixture,  public ::testing::WithParamInterface<int>  {
 };
 
+class ProfilerParameterGapFillingEdgePreservation :
+    public ProfilerSDKFixture, public ::testing::WithParamInterface<int> {
+};
+
+
+class ProfilerParameterResampling :
+    public ProfilerSDKFixture, public ::testing::WithParamInterface<std::pair<std::string, int>> {
+};
+
+
+
+class ProfilerParameterResamplingEdgePreservation :
+    public ProfilerSDKFixture, public ::testing::WithParamInterface<int> {
+};
+
 
 /**
  * @brief RawImageParameters.h

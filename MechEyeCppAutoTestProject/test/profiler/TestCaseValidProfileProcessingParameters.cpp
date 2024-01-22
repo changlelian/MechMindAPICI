@@ -43,10 +43,45 @@ INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterMedianFilterWindowSize,
 
 
 
-// [EncoderTriggerInterval]: Testing the [set/getValue] Interface with Normal Values
-TEST_P(ProfilerParameterGapFilling, EncoderTriggerInterval) {
+// [GapFilling]: Testing the [set/getValue] Interface with Normal Values
+TEST_P(ProfilerParameterGapFilling, GapFilling) {
 	const int setValue = GetParam();
 	// by namespace
 	testIntValue(profiler, profile_processing::GapFilling::name, setValue);
 }
 INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterGapFilling, ::testing::Range(0, 17));
+
+
+
+
+
+// [GapFillingEdgePreservation]: Testing the [set/getValue] Interface with Normal Values
+TEST_P(ProfilerParameterGapFillingEdgePreservation, GapFillingEdgePreservation) {
+    const int setValue = GetParam();
+    // by namespace
+    testIntValue(profiler, profile_processing::GapFillingEdgePreservation::name, setValue);
+}
+INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterGapFillingEdgePreservation, ::testing::Range(0, 6));
+
+
+
+// [Resampling]: Testing the [set/getEnumValue] Interface with Normal Values
+TEST_P(ProfilerParameterResampling, Resampling) {
+
+    std::pair<std::string, int> modeMap = GetParam();
+    std::cout << modeMap.first << modeMap.second << std::endl;
+    testEnumValue(profiler, profile_processing::Resampling::name, modeMap);
+}
+INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterResampling,
+    ::testing::Values(std::make_pair("Nearest", 0), std::make_pair("Farthest", 1)));
+
+
+
+
+// [ResamplingEdgePreservation]: Testing the [set/getValue] Interface with Normal Values
+TEST_P(ProfilerParameterResamplingEdgePreservation, ResamplingEdgePreservation) {
+    const int setValue = GetParam();
+    // by namespace
+    testIntValue(profiler, profile_processing::ResamplingEdgePreservation::name, setValue);
+}
+INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterResamplingEdgePreservation, ::testing::Range(1, 6));
