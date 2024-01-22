@@ -31,7 +31,7 @@ void ParseCommandLine(int argc, char** argv) {
     }
     else
     {
-        std::cout << "Mech eye connect faild. Please check the device ip address.";
+        std::cerr << "Mech eye connect faild. Please check the device network.";
         exit(-1);
     }
 }
