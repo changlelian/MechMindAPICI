@@ -11,8 +11,8 @@
 void upgrade(std::string& ipAddress) {
 
         std::cout <<"===============IP: " << ipAddress << " is upgrading===============" << std::endl;
-        //std::string update = "/opt/mech-mind/mech-eye-sdk/bin/firmware_upgrader -h " + ipAddress + " -z /opt/mech-mind/mech-eye-sdk/resource/mmind_eye_v2.3.0.zip";
-        //system(update.c_str());
+        std::string update = "/opt/mech-mind/mech-eye-sdk/bin/firmware_upgrader -h " + ipAddress + " -z /opt/mech-mind/mech-eye-sdk/resource/mmind_eye_v2.3.0.zip";
+        system(update.c_str());
 }
 
 
