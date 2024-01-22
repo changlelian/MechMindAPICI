@@ -18,7 +18,7 @@ pipeline {
                     sh 'sudo docker exec FirmwareUpgradeTest mkdir -p /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
                     sh 'sudo docker exec FirmwareUpgradeTest cmake -S /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/ -B /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
                     sh 'sudo docker exec FirmwareUpgradeTest make -C /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
-                    sh 'sudo docker exec FirmwareUpgradeTest /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build/UpgradeFirmwareUbuntu 192.168.20.153'
+                    sh 'sudo docker exec FirmwareUpgradeTest /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build/UpgradeFirmwareUbuntu 192.168.20.153 192.168.20.223 192.168.20.15'
                             
                     // sh 'sudo docker stop APIBuildTest'
                     // sh 'sudo docker rm APIBuildTest'
