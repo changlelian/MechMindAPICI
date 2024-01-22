@@ -16,7 +16,7 @@ pipeline {
                         sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APIBuildTest mecheyeenvimage'
                         sh 'sudo docker start APIBuildTest'
                         sh 'sudo docker exec APIBuildTest sh /home/MMIND_TEST_CI_main/MechEyeCppBuildAmd/ubuntu_build.sh'
-                        
+
                         // sh 'sudo docker stop APIBuildTest'
                         // sh 'sudo docker rm APIBuildTest'
                     }
@@ -80,7 +80,7 @@ pipeline {
 
     post {
         always {
-            sh 'docker stop $(docker ps -q) && docker rm -f $(docker ps -aq)'
+            sh 'sudo docker stop $(docker ps -q) && sudo docker rm -f $(docker ps -aq)'
             //sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_main/allure-results/'
             // 将测试报告文件移动到jenkins默认的工作路径下
             //sh 'mkdir -p allure-results && cp /home/mech_mind_sdk/MechMindSDK/GithubTestCode/APITestPy/report/*.json /var/lib/jenkins/workspace/MMIND_main/allure-results/'
