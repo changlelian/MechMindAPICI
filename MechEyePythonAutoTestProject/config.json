@@ -1,0 +1,108 @@
+{
+  "camera_image_type": {
+    "color_type": [
+      "Mech-Eye Deep",
+      "Mech-Eye DEEP",
+      "Mech-Eye Log M",
+      "Mech-Eye LSR L",
+      "Mech-Eye PRO M",
+      "Mech-Eye Log S",
+      "Mech-Eye LSR S",
+      "Mech-Eye Pro M Enhanced"
+    ],
+
+    "monochrome_type": [
+      "Mech-Eye UHP 140",
+      "Mech-Eye PRO M",
+      "Mech-Eye NANO",
+      "Mech-Eye PRO XS",
+      "Mech-Eye PRO S",
+      "Mech-Eye Laser L",
+      "Mech-Eye Pro M Enhanced",
+      "Mech-Eye Pro S Enhanced"
+    ]
+  },
+
+  "uhp_camera": [
+    "Mech-Eye UHP 140"
+  ],
+
+  "laser_camera": [
+    "Mech-Eye LSR L",
+    "Mech-Eye Laser L",
+    "Mech-Eye DEEP"
+  ],
+
+  "projector_coding_mode_camera": [
+    "Mech-Eye NANO",
+    "Mech-Eye PRO M",
+    "Mech-Eye PRO S",
+    "Mech-Eye UHP 140",
+    "Mech-Eye PRO XS"
+  ],
+
+  "projector_anti_flicker_camera": [
+    "Mech-Eye NANO",
+    "Mech-Eye PRO M",
+    "Mech-Eye PRO S"
+  ],
+
+  "projector_power_level_camera": [
+    "Mech-Eye Log M",
+    "Mech-Eye Log S",
+    "Mech-Eye NANO",
+    "Mech-Eye PRO XS",
+    "Mech-Eye UHP 140",
+    "Mech-Eye PRO M",
+    "Mech-Eye PRO S",
+    "Mech-Eye S Enhanced",
+    "Mech-Eye M Enhanced"
+  ],
+
+  "pattern_role_camera": [
+    "Mech-Eye DEEP",
+    "Mech-Eye LSR L",
+    "Mech-Eye LSR S"
+  ],
+
+  "no_flash_camera": [
+    "Mech-Eye LSR L",
+    "Mech-Eye Deep",
+    "Mech-Eye DEEP"
+  ],
+
+  "exposure_2d_HDR": {
+    "exposure_4_to_996": [
+      "Mech-Eye Laser L",
+      "Mech-Eye Laser L Enhanced"
+    ]
+  },
+
+  "exposure_2d_timed": {
+    "exposure_4_to_996": [
+     "Mech-Eye Laser L",
+     "Mech-Eye Laser L Enhanced"
+    ]
+  },
+
+  "exposure_3d": {
+    "exposure_4_to_96": [
+      "Mech-Eye Laser L",
+      "Mech-Eye Laser L Enhanced"
+    ],
+    "exposure_8_to_96": [
+      "Mech-Eye LSR L",
+      "Mech-Eye DEEP",
+      "Mech-Eye LSR S"
+    ],
+    "exposure_0_1_to_45": [
+      "Mech-Eye Pro L Enhanced"
+    ]
+  },
+  "analog_gain": {
+    "gain_for_8030": [
+      "Mech-Eye LNX 8030"
+    ]
+  },
+  "version": "1.0.0"
+}
