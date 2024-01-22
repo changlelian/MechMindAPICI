@@ -58,3 +58,41 @@ TEST_P(ProfilerParameterSpotSelection, SpotSelection) {
 
 INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterSpotSelection,
     ::testing::Values(std::make_pair("Strongest", 0), std::make_pair("Nearest", 1), std::make_pair("Farthest", 2), std::make_pair("Invalid", 3)));
+
+
+
+
+
+// [EdgeSelection]: Testing the [set/getValue] Interface with Normal Values
+TEST_P(ProfilerParameterEdgeSelection, EdgeSelection) {
+    std::pair<std::string, int> modeMap = GetParam();
+    std::cout << modeMap.first << modeMap.second << std::endl;
+    testEnumValue(profiler, profile_extraction::EdgeSelection::name, modeMap);
+}
+INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterEdgeSelection,
+    ::testing::Values(std::make_pair("Center", 0), std::make_pair("TopEdge", 1), std::make_pair("BottomEdge", 2)));
+
+
+
+
+
+// [MinSharpness]: Testing the [set/getValue] Interface with Normal Values
+TEST_P(ProfilerParameterMinSharpness, MinSharpness) {
+    const int minSharpnessValue = GetParam();
+    testIntValue(profiler, profile_extraction::MinSharpness::name, minSharpnessValue);
+}
+INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterMinSharpness, ::testing::Range(0, 101, 2));
+
+
+
+
+
+// [BrightnessAdjustment]: Testing the [set/getValue] Interface with Normal Values
+TEST_P(ProfilerParameterBrightnessAdjustment, BrightnessAdjustment) {
+    std::pair<std::string, int> modeMap = GetParam();
+    std::cout << modeMap.first << modeMap.second << std::endl;
+    testEnumValue(profiler, profile_extraction::BrightnessAdjustment::name, modeMap);
+}
+INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterBrightnessAdjustment,
+    ::testing::Values(std::make_pair("Scale_0_5_0", 0), std::make_pair("Scale_0_7_5", 1), std::make_pair("Scale_1_0_0", 2),
+        std::make_pair("Scale_1_5_0", 3), std::make_pair("Scale_2_0_0", 4)));

@@ -151,12 +151,29 @@ class ProfilerParameterMinGrayscaleValue :
     public ProfilerSDKFixture,  public ::testing::WithParamInterface<int>  {
 };
 
+
 class ProfilerParameterMinMaxLaserLineWidth:
     public ProfilerSDKFixture, public ::testing::WithParamInterface<int> {
 
 };
 
+
 class ProfilerParameterSpotSelection : 
     public ProfilerSDKFixture,  public ::testing::WithParamInterface<std::pair<std::string, int>>  {
 };
 
+
+class ProfilerParameterEdgeSelection :
+    public ProfilerSDKFixture, public ::testing::WithParamInterface<std::pair<std::string, int>> {
+};
+
+
+class ProfilerParameterMinSharpness :
+    public ProfilerSDKFixture, public ::testing::WithParamInterface<int> {
+
+};
+
+
+class ProfilerParameterBrightnessAdjustment :
+    public ProfilerSDKFixture, public ::testing::WithParamInterface<std::pair<std::string, int>> {
+};
