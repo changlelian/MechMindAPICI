@@ -10,7 +10,6 @@ pipeline {
         stage('Clone test code'){
             steps{
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '2c5b2149-4914-4b15-bd7a-af703dddf0da', url: 'https://github.com/changlelian/MechMindAPICI.git']])
-
             }
         }
 
@@ -29,62 +28,101 @@ pipeline {
             }
         }
 
-        stage('Parallel execute Stages') {
-        parallel {
-            stage('Build cpp amd64 samples') {
-                steps {
-                    script {
-                        sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APIBuildTest mecheyeenvimage'
-                        sh 'sudo docker start APIBuildTest'
-                        sh 'sudo docker exec APIBuildTest sh /home/MMIND_TEST_CI_main/MechEyeCppBuildAmd/ubuntu_build.sh'
+        // stage('Parallel Execute Cpp Stages') {
+        //     parallel {
+        //         stage('Build cpp amd64 samples') {
+        //             steps {
+        //                 script {
+        //                     sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APIBuildTest mecheyeenvimage'
+        //                     sh 'sudo docker start APIBuildTest'
+        //                     sh 'sudo docker exec APIBuildTest sh /home/MMIND_TEST_CI_main/MechEyeCppBuildAmd/ubuntu_build.sh'
+        //                 }
+        //             }
+        //         }
+
+        //         stage('Test cpp camera interface in linux') {
+        //             steps {
+        //                 script {
+        //                     sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestCameraInterface mecheyeenvimage'
+        //                     sh 'sudo docker start APITestCameraInterface'
+        //                     sh 'sudo docker exec APITestCameraInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
+        //                     sh 'sudo docker exec APITestCameraInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+        //                     sh 'sudo docker exec APITestCameraInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+        //                     sh 'sudo docker exec APITestCameraInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+        //                     sh 'sudo docker exec APITestCameraInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Camera* --ip=${IP1}'
+        //                 }
+        //             }
+        //         }
+
+
+        //         stage('Test cpp profiler interface in linux') {
+        //             steps {
+        //                 script {
+        //                     sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestProfilerInterface mecheyeenvimage'
+        //                     sh 'sudo docker start APITestProfilerInterface'
+        //                     sh 'sudo docker exec APITestProfilerInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
+        //                     sh 'sudo docker exec APITestProfilerInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+        //                     sh 'sudo docker exec APITestProfilerInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+        //                     sh 'sudo docker exec APITestProfilerInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+        //                     sh 'sudo docker exec APITestProfilerInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Profiler* --ip=${IP2}'
+        //                 }
+        //             }
+        //         }
+                
+
+        //         stage('Test cpp virtual profiler interface in linux') {
+        //             steps {
+        //                 script {
+        //                     sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestVirtualProfilerInterface mecheyeenvimage'
+        //                     sh 'sudo docker start APITestVirtualProfilerInterface'
+        //                     sh 'sudo docker exec APITestVirtualProfilerInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
+        //                     sh 'sudo docker exec APITestVirtualProfilerInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+        //                     sh 'sudo docker exec APITestVirtualProfilerInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+        //                     sh 'sudo docker exec APITestVirtualProfilerInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+        //                     sh 'sudo docker exec APITestVirtualProfilerInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*ProVirtual* --ip=${IP3}'
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
+        stage('Parallel Execute Python Stages') {
+            parallel {
+                stage('Test cpp camera interface in linux') {
+                    steps {
+                        script {
+                            sh 'sudo docker run -d -t -v /home/mech_mind_sdk/MechMindSDK:/home --name APITestPythonCameraInterface mecheyeenvimage'
+                            sh 'sudo docker start APITestPythonCameraInterface'
+                            sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            
+                            sh 'sudo docker exec APITestPythonCameraInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
+                            sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install /home/*.whl -i https://pypi.tuna.tsinghua.edu.cn/simple'
+
+                            sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install -r /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            sh 'sudo docker exec APITestPythonCameraInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py ${IP1}'
+
+                        }
+                    }
+                }
+
+                stage('Test cpp profiler interface in linux') {
+                    steps {
+                        script {
+                            echo "666"
+                            // sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestCameraInterface mecheyeenvimage'
+                            // sh 'sudo docker start APITestCameraInterface'
+                            // sh 'sudo docker exec APITestCameraInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
+                            // sh 'sudo docker exec APITestCameraInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            // sh 'sudo docker exec APITestCameraInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            // sh 'sudo docker exec APITestCameraInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            // sh 'sudo docker exec APITestCameraInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Camera* --ip=${IP1}'
+                        }
                     }
                 }
             }
-
-            stage('Test cpp camera interface in linux') {
-                    steps {
-                        script {
-                            sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestCameraInterface mecheyeenvimage'
-                            sh 'sudo docker start APITestCameraInterface'
-                            sh 'sudo docker exec APITestCameraInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
-                            sh 'sudo docker exec APITestCameraInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            sh 'sudo docker exec APITestCameraInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            sh 'sudo docker exec APITestCameraInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            sh 'sudo docker exec APITestCameraInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Camera* --ip=${IP1}'
-                        }
-                    }
-                }
-
-            stage('Test cpp profiler interface in linux') {
-                    steps {
-                        script {
-                            sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestProfilerInterface mecheyeenvimage'
-                            sh 'sudo docker start APITestProfilerInterface'
-                            sh 'sudo docker exec APITestProfilerInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
-                            sh 'sudo docker exec APITestProfilerInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            sh 'sudo docker exec APITestProfilerInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            sh 'sudo docker exec APITestProfilerInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            sh 'sudo docker exec APITestProfilerInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Profiler* --ip=${IP2}'
-                        }
-                    }
-                }
-            
-                stage('Test cpp virtual profiler interface in linux') {
-                    steps {
-                        script {
-                            sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestVirtualProfilerInterface mecheyeenvimage'
-                            sh 'sudo docker start APITestVirtualProfilerInterface'
-                            sh 'sudo docker exec APITestVirtualProfilerInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
-                            sh 'sudo docker exec APITestVirtualProfilerInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            sh 'sudo docker exec APITestVirtualProfilerInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            sh 'sudo docker exec APITestVirtualProfilerInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            sh 'sudo docker exec APITestVirtualProfilerInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*ProVirtual* --ip=${IP3}'
-                        }
-                    }
-                }
-
         }
-        }   
+
+
     }
 
     post {
