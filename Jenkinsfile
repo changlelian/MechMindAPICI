@@ -2,9 +2,9 @@ pipeline {
     agent any
 
         environment {
-        IP1 = '192.168.20.45'   // camera
+        IP1 = '192.168.20.46'   // camera
         IP2 = '192.168.20.153'   // profiler
-        IP3 = '192.168.20.173'    // profiler virtual
+        IP3 = '192.168.20.14'    // profiler virtual
         DebianPackage = '/home/Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
         WheelPackage = '/home/MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
     }
