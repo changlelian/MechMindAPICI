@@ -3,8 +3,8 @@ pipeline {
 
         environment {
         IP1 = '192.168.20.46'   // camera
-        IP2 = '192.168.20.153'   // profiler
-        IP3 = '192.168.20.14'    // profiler virtual
+        IP2 = '192.168.20.216'   // profiler
+        IP3 = '192.168.20.147'    // profiler virtual
         DebianPackage = '/home/Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
         WheelPackage = '/home/MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
     }
