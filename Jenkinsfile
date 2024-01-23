@@ -18,14 +18,20 @@ pipeline {
         stage('Update mecheye device firmware') {
             steps {
                 script {
-                    sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name FirmwareUpgradeTest mecheyeenvimage'
-                    sh 'sudo docker start FirmwareUpgradeTest'
+                    // sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name FirmwareUpgradeTest mecheyeenvimage'
+                    // sh 'sudo docker start FirmwareUpgradeTest'
 
-                    sh 'sudo docker exec FirmwareUpgradeTest dpkg -i ${DebianPackage}'
-                    sh 'sudo docker exec FirmwareUpgradeTest mkdir -p /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
-                    sh 'sudo docker exec FirmwareUpgradeTest cmake -S /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/ -B /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
-                    sh 'sudo docker exec FirmwareUpgradeTest make -C /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
-                    sh 'sudo docker exec FirmwareUpgradeTest /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build/UpgradeFirmwareUbuntu ${IP1} ${IP2} ${IP3}'
+                    // sh 'sudo docker exec FirmwareUpgradeTest dpkg -i ${DebianPackage}'
+                    // sh 'sudo docker exec FirmwareUpgradeTest mkdir -p /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
+                    // sh 'sudo docker exec FirmwareUpgradeTest cmake -S /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/ -B /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
+                    // sh 'sudo docker exec FirmwareUpgradeTest make -C /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
+                    // sh 'sudo docker exec FirmwareUpgradeTest /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build/UpgradeFirmwareUbuntu ${IP1} ${IP2} ${IP3}'
+                    sh 'sudo dpkg -P Mecheyeapi'
+                    sh 'sudo dpkg -i /var/lib/jenkins/workspace/Mech-Eye_API_2.3.0_amd64.deb'
+                    sh 'sudo mkdir -p /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
+                    sh 'sudo cmake -S /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/ -B /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
+                    sh 'sudo make -C /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
+                    sh '/var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build/UpgradeFirmwareUbuntu ${IP1} ${IP2} ${IP3}'
                 }
             }
         }
