@@ -5,6 +5,8 @@ pipeline {
         IP1 = '192.168.20.242'   // camera
         IP2 = '192.168.20.254'   // profiler
         IP3 = '192.168.20.14'    // profiler virtual
+        DebianPackage = '/home/Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
+        WheelPackage = '/home/MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
     }
     stages {
         stage('Clone test code'){
@@ -19,7 +21,7 @@ pipeline {
                     sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name FirmwareUpgradeTest mecheyeenvimage'
                     sh 'sudo docker start FirmwareUpgradeTest'
 
-                    sh 'sudo docker exec FirmwareUpgradeTest dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
+                    sh 'sudo docker exec FirmwareUpgradeTest dpkg -i ${DebianPackage}'
                     sh 'sudo docker exec FirmwareUpgradeTest mkdir -p /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
                     sh 'sudo docker exec FirmwareUpgradeTest cmake -S /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/ -B /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
                     sh 'sudo docker exec FirmwareUpgradeTest make -C /home/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
@@ -88,15 +90,15 @@ pipeline {
 
         stage('Parallel Execute Python Stages') {
             parallel {
-                stage('Test cpp camera interface in linux') {
+                stage('Test python camera interface in linux') {
                     steps {
                         script {
-                            sh 'sudo docker run -d -t -v /home/mech_mind_sdk/MechMindSDK:/home --name APITestPythonCameraInterface mecheyeenvimage'
+                            sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestPythonCameraInterface mecheyeenvimage'
                             sh 'sudo docker start APITestPythonCameraInterface'
                             sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple'
                             
-                            sh 'sudo docker exec APITestPythonCameraInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
-                            sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install /home/*.whl -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            sh 'sudo docker exec APITestPythonCameraInterface dpkg -i ${DebianPackage}'
+                            sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install ${WheelPackage} -i https://pypi.tuna.tsinghua.edu.cn/simple'
 
                             sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install -r /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'
                             sh 'sudo docker exec APITestPythonCameraInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py ${IP1}'
@@ -105,7 +107,7 @@ pipeline {
                     }
                 }
 
-                stage('Test cpp profiler interface in linux') {
+                stage('Test python profiler interface in linux') {
                     steps {
                         script {
                             echo "666"
@@ -130,19 +132,16 @@ pipeline {
             sh 'sudo docker stop $(sudo docker ps -q) && sudo docker rm -f $(sudo docker ps -aq)'
             //sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_main/allure-results/'
             // 将测试报告文件移动到jenkins默认的工作路径下
-            //sh 'mkdir -p allure-results && cp /home/mech_mind_sdk/MechMindSDK/GithubTestCode/APITestPy/report/*.json /var/lib/jenkins/workspace/MMIND_main/allure-results/'
+            sh 'mkdir -p allure-results && cp /var/lib/jenkins/workspace/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/report/*.json /var/lib/jenkins/workspace/MMIND_TEST_CI_main/allure-results/'
 
-            // Allure 报告的生成命令
-            // allure([
-            //     includeProperties: false,
-            //     jdk: '',
-            //     properties: [],
-            //     reportBuildPolicy: 'ALWAYS',
-            //     results: [[path: '/home/mech_mind_sdk/MechMindSDK/GithubTestCode/APITestPy/report']]
-            // ])
-            
-            // sh 'sudo docker stop APITestCameraInterface && sudo docker rm APITestCameraInterface'
-            // sh 'sudo docker stop APITestPythonCameraInterface && sudo docker rm APITestPythonCameraInterface'
+            //Allure report
+            allure([
+                includeProperties: false,
+                jdk: '',
+                properties: [],
+                reportBuildPolicy: 'ALWAYS',
+                results: [[path: 'allure-results']]
+            ])
 
         }
     }
