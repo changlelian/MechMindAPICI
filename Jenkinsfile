@@ -34,8 +34,8 @@ pipeline {
         //     }
         // }
 
-        // stage('Parallel Execute Cpp Stages') {
-        //     parallel {
+        stage('Parallel Execute Cpp Stages') {
+            parallel {
         //         stage('Build cpp amd64 samples') {
         //             steps {
         //                 script {
@@ -76,21 +76,29 @@ pipeline {
         //         }
                 
 
-        //         stage('Test cpp virtual profiler interface in linux') {
-        //             steps {
-        //                 script {
-        //                     sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestVirtualProfilerInterface mecheyeenvimage'
-        //                     sh 'sudo docker start APITestVirtualProfilerInterface'
-        //                     sh 'sudo docker exec APITestVirtualProfilerInterface dpkg -i /home/${DebianPackage}'
-        //                     sh 'sudo docker exec APITestVirtualProfilerInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-        //                     sh 'sudo docker exec APITestVirtualProfilerInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-        //                     sh 'sudo docker exec APITestVirtualProfilerInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-        //                     sh 'sudo docker exec APITestVirtualProfilerInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*ProVirtual* --ip=${IP3}'
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+                stage('Test cpp virtual profiler interface in linux') {
+                    steps {
+                        script {
+                            // sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestVirtualProfilerInterface mecheyeenvimage'
+                            // sh 'sudo docker start APITestVirtualProfilerInterface'
+                            // sh 'sudo docker exec APITestVirtualProfilerInterface dpkg -i /home/${DebianPackage}'
+                            // sh 'sudo docker exec APITestVirtualProfilerInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            // sh 'sudo docker exec APITestVirtualProfilerInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            // sh 'sudo docker exec APITestVirtualProfilerInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
+                            // sh 'sudo docker exec APITestVirtualProfilerInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*ProVirtual* --ip=127.0.0.1'
+                            
+                            dockerRunAndExec('APITestVirtualProfilerInterface', 'mecheyeenvimage', [
+                                "dpkg -i /home/${DEB_PACKAGE}",
+                                "mkdir -p /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
+                                "cmake -S /home/${WORKSPACE}/MechEyeCppAutoTestProject/src -B /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
+                                "make -C /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
+                                "/home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*ProVirtual* --ip=127.0.0.1"
+                            ])
+                        }
+                    }
+                }
+            }
+        }
 
         stage('Parallel Execute Python Stages') {
             parallel {
