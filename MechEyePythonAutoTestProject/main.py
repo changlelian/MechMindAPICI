@@ -44,9 +44,8 @@ if __name__ == '__main__':
         # test_case_vector.append(test_suite1)
         # test_case_vector.append(test_suite2)
         #test_case_vector.append(test_suite3)
-
         test_case_vector.append(os.path.join(run_path, 'area'))
-        test_case_vector.append(os.path.join(run_path, 'area', 'parameter'))
+
 
     elif profiler_connect_status.is_ok():
         # test_suite1 = test_loader.discover(os.path.join(run_path, 'profiler'), pattern='test_case*.py')
@@ -55,10 +54,8 @@ if __name__ == '__main__':
         # test_case_vector.append(test_suite1)
         # test_case_vector.append(test_suite2)
         # test_case_vector.append(test_suite3)
-
         test_case_vector.append(os.path.join(run_path, 'profiler'))
-        # test_case_vector.append(os.path.join(run_path, 'profiler', 'capture'))
-        # test_case_vector.append(os.path.join(run_path, 'profiler', 'parameter'))
+
     elif ip_info == "127.0.0.1":
         test_case_vector.append(os.path.join(run_path, 'virtual_profiler'))
 
