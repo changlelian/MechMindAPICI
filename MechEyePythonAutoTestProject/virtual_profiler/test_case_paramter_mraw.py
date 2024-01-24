@@ -1,7 +1,7 @@
 from base_test_case import *
 
 
-class TestLoadFileParameter(unittest.TestCase):
+class TestVirtualParameter(unittest.TestCase):
 
     def setUp(self) -> None:
         self.json_content = read_device_type_json_file()
