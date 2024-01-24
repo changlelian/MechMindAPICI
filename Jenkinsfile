@@ -124,7 +124,7 @@ pipeline {
                             sh 'sudo docker exec APITestPythonProfilerInterface python3 -m pip install ${WheelPackage} -i https://pypi.tuna.tsinghua.edu.cn/simple'
 
                             sh 'sudo docker exec APITestPythonProfilerInterface python3 -m pip install -r /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'
-                            sh 'sudo docker exec APITestPythonProfilerInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py ${IP1}'
+                            sh 'sudo docker exec APITestPythonProfilerInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py ${IP2}'
                         }
                     }
                 }
