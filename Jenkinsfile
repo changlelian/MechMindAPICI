@@ -129,6 +129,22 @@ pipeline {
                         }
                     }
                 }
+
+                stage('Test python virtual profiler interface in linux') {
+                    steps {
+                        script {
+                            sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestPythonVirtualProfilerInterface mecheyeenvimage'
+                            sh 'sudo docker start APITestPythonVirtualProfilerInterface'
+                            sh 'sudo docker exec APITestPythonVirtualProfilerInterface python3 -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            
+                            sh 'sudo docker exec APITestPythonVirtualProfilerInterface dpkg -i ${DebianPackage}'
+                            sh 'sudo docker exec APITestPythonVirtualProfilerInterface python3 -m pip install ${WheelPackage} -i https://pypi.tuna.tsinghua.edu.cn/simple'
+
+                            sh 'sudo docker exec APITestPythonVirtualProfilerInterface python3 -m pip install -r /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            sh 'sudo docker exec APITestPythonVirtualProfilerInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py 127.0.0.1'
+                        }
+                    }
+                }
             }
         }
 
