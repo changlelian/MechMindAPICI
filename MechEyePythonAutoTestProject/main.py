@@ -19,14 +19,11 @@ if __name__ == '__main__':
     report_path = os.path.join(run_path, 'report')
     files_path = os.path.join(run_path, 'files')
 
-    if os.path.exists(report_path):
-        shutil.rmtree(report_path)
+    if not os.path.exists(report_path):
+        os.makedirs(report_path)
 
-    if os.path.exists(files_path):
-        shutil.rmtree(files_path)
-
-    os.makedirs(report_path)
-    os.makedirs(files_path)
+    if not os.path.exists(files_path):
+        os.makedirs(files_path)
 
     camera = Camera()
     profiler = Profiler()

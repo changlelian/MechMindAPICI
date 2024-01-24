@@ -11,6 +11,7 @@ pipeline {
     stages {
         stage('Clone test code'){
             steps{
+                sh 'sudo rm -rf MMIND_TEST_CI_main'
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '2c5b2149-4914-4b15-bd7a-af703dddf0da', url: 'https://github.com/changlelian/MechMindAPICI.git']])
             }
         }
