@@ -16,7 +16,7 @@ pipeline {
         stage('Clone test code'){
             steps{
                 sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_TEST_CI_main*'
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '2c5b2149-4914-4b15-bd7a-af703dddf0da', url: ${REPO_URL}]])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '2c5b2149-4914-4b15-bd7a-af703dddf0da', url: "${REPO_URL}"]])
             }
         }
 
