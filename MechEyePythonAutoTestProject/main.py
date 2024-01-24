@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import shutil
 import unittest
 import pytest
 from area import *
@@ -18,11 +19,14 @@ if __name__ == '__main__':
     report_path = os.path.join(run_path, 'report')
     files_path = os.path.join(run_path, 'files')
 
-    if not os.path.exists(report_path):
-        os.makedirs(report_path)
+    if os.path.exists(report_path):
+        shutil.rmtree(report_path)
 
-    if not os.path.exists(files_path):
-        os.makedirs(files_path)
+    if os.path.exists(files_path):
+        shutil.rmtree(files_path)
+
+    os.makedirs(report_path)
+    os.makedirs(files_path)
 
     camera = Camera()
     profiler = Profiler()
@@ -53,8 +57,10 @@ if __name__ == '__main__':
         # test_case_vector.append(test_suite3)
 
         test_case_vector.append(os.path.join(run_path, 'profiler'))
-        test_case_vector.append(os.path.join(run_path, 'profiler', 'capture'))
-        test_case_vector.append(os.path.join(run_path, 'profiler', 'parameter'))
+        # test_case_vector.append(os.path.join(run_path, 'profiler', 'capture'))
+        # test_case_vector.append(os.path.join(run_path, 'profiler', 'parameter'))
+    elif ip_info == "127.0.0.1":
+        test_case_vector.append(os.path.join(run_path, 'virtual_profiler'))
 
     # combined_test_suite = unittest.TestSuite(test_case_vector)
     # runner = unittest.TextTestRunner()

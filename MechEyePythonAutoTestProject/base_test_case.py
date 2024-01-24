@@ -8,8 +8,15 @@ from mecheye.profiler_utils import *
 
 work_space = os.path.dirname(__file__)
 
+
 def read_json_file():
-    json_path = os.path.join(work_space,"config.json")
+    json_path = os.path.join(work_space, "config.json")
+    with open(json_path, "r", encoding="utf-8") as f:
+        return dict(json.load(f))
+
+
+def read_device_type_json_file():
+    json_path = os.path.join(work_space, "device_type.json")
     with open(json_path, "r", encoding="utf-8") as f:
         return dict(json.load(f))
 
