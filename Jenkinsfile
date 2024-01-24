@@ -3,9 +3,9 @@ pipeline {
 
         environment {
 
-        IP1 = '192.168.20.118'   // camera
-        IP2 = '192.168.20.114'   // profiler
-        IP3 = '192.168.20.147'    // profiler virtual
+        CAM_IP = '192.168.20.107'   // camera
+        LNX_IP = '192.168.20.232'   // profiler
+        OTHER_IP = '192.168.20.159'    // profiler virtual
         DEB_PACKAGE = 'Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
         WheelPackage = '/home/MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
 
@@ -13,25 +13,25 @@ pipeline {
 
     }
     stages {
-        stage('Clone test code'){
-            steps{
-                //sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_TEST_CI_main*'
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '2c5b2149-4914-4b15-bd7a-af703dddf0da', url: 'https://github.com/changlelian/MechMindAPICI.git']])
-            }
-        }
-
-        // stage('Update mecheye device firmware') {
-        //     steps {
-        //         script {
-        //             sh 'sudo dpkg -P Mecheyeapi'
-        //             sh 'sudo dpkg -i /var/lib/jenkins/workspace/${DEB_PACKAGE}'
-        //             sh 'sudo mkdir -p /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
-        //             sh 'sudo cmake -S /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/ -B /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
-        //             sh 'sudo make -C /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
-        //             sh '/var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build/UpgradeFirmwareUbuntu ${IP1} ${IP2} ${IP3}'
-        //         }
+        // stage('Clone test code'){
+        //     steps{
+        //         //sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_TEST_CI_main*'
+        //         checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '2c5b2149-4914-4b15-bd7a-af703dddf0da', url: 'https://github.com/changlelian/MechMindAPICI.git']])
         //     }
         // }
+
+        stage('Update mecheye device firmware') {
+            steps {
+                script {
+                    sh 'sudo dpkg -P Mecheyeapi'
+                    sh 'sudo dpkg -i /var/lib/jenkins/workspace/${DEB_PACKAGE}'
+                    sh 'sudo mkdir -p /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
+                    sh 'sudo cmake -S /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/ -B /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
+                    sh 'sudo make -C /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
+                    sh '/var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build/UpgradeFirmwareUbuntu ${CAM_IP} ${LNX_IP} ${OTHER_IP}'
+                }
+            }
+        }
 
         // stage('Parallel Execute Cpp Stages') {
         //     parallel {
