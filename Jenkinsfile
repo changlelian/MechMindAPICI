@@ -3,7 +3,7 @@ pipeline {
 
         environment {
         IP1 = '192.168.20.39'   // camera
-        IP2 = '192.168.20.89'   // profiler
+        IP2 = '192.168.20.8'   // profiler
         IP3 = '192.168.20.147'    // profiler virtual
         DebianPackage = '/home/Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
         WheelPackage = '/home/MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
@@ -96,22 +96,22 @@ pipeline {
 
         stage('Parallel Execute Python Stages') {
             parallel {
-                // stage('Test python camera interface in linux') {
-                //     steps {
-                //         script {
-                //             sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestPythonCameraInterface mecheyeenvimage'
-                //             sh 'sudo docker start APITestPythonCameraInterface'
-                //             sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                stage('Test python camera interface in linux') {
+                    steps {
+                        script {
+                            sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestPythonCameraInterface mecheyeenvimage'
+                            sh 'sudo docker start APITestPythonCameraInterface'
+                            sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple'
                             
-                //             sh 'sudo docker exec APITestPythonCameraInterface dpkg -i ${DebianPackage}'
-                //             sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install ${WheelPackage} -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            sh 'sudo docker exec APITestPythonCameraInterface dpkg -i ${DebianPackage}'
+                            sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install ${WheelPackage} -i https://pypi.tuna.tsinghua.edu.cn/simple'
 
-                //             sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install -r /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'
-                //             sh 'sudo docker exec APITestPythonCameraInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py ${IP1}'
+                            sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install -r /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            sh 'sudo docker exec APITestPythonCameraInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py ${IP1}'
 
-                //         }
-                //     }
-                // }
+                        }
+                    }
+                }
 
                 stage('Test python profiler interface in linux') {
                     steps {
