@@ -55,7 +55,7 @@ pipeline {
                                     "mkdir -p /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
                                     "cmake -S /home/${WORKSPACE}/MechEyeCppAutoTestProject/src -B /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
                                     "make -C /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
-                                    "/home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*ProVirtual* --ip=${CAM_IP}"
+                                    "/home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Camera* --ip=${CAM_IP}"
                                 ])
                             }
                         }
@@ -72,7 +72,7 @@ pipeline {
                                     "mkdir -p /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
                                     "cmake -S /home/${WORKSPACE}/MechEyeCppAutoTestProject/src -B /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
                                     "make -C /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
-                                    "/home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*ProVirtual* --ip=${LNX_IP}"
+                                    "/home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Profiler* --ip=${LNX_IP}"
                                 ])
                             }
                         }
