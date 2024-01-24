@@ -15,23 +15,23 @@ pipeline {
     stages {
         stage('Clone test code'){
             steps{
-                sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_TEST_CI_main*'
+                //sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_TEST_CI_main*'
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '2c5b2149-4914-4b15-bd7a-af703dddf0da', url: 'https://github.com/changlelian/MechMindAPICI.git']])
             }
         }
 
-        stage('Update mecheye device firmware') {
-            steps {
-                script {
-                    sh 'sudo dpkg -P Mecheyeapi'
-                    sh 'sudo dpkg -i /var/lib/jenkins/workspace/${DEB_PACKAGE}'
-                    sh 'sudo mkdir -p /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
-                    sh 'sudo cmake -S /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/ -B /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
-                    sh 'sudo make -C /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
-                    sh '/var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build/UpgradeFirmwareUbuntu ${IP1} ${IP2} ${IP3}'
-                }
-            }
-        }
+        // stage('Update mecheye device firmware') {
+        //     steps {
+        //         script {
+        //             sh 'sudo dpkg -P Mecheyeapi'
+        //             sh 'sudo dpkg -i /var/lib/jenkins/workspace/${DEB_PACKAGE}'
+        //             sh 'sudo mkdir -p /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
+        //             sh 'sudo cmake -S /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/ -B /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
+        //             sh 'sudo make -C /var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build'
+        //             sh '/var/lib/jenkins/workspace/MMIND_TEST_CI_main/UpgradeFirmwareLinux/build/UpgradeFirmwareUbuntu ${IP1} ${IP2} ${IP3}'
+        //         }
+        //     }
+        // }
 
         // stage('Parallel Execute Cpp Stages') {
         //     parallel {
