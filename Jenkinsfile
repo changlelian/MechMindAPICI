@@ -116,14 +116,15 @@ pipeline {
                 stage('Test python profiler interface in linux') {
                     steps {
                         script {
-                            echo "666"
-                            // sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestCameraInterface mecheyeenvimage'
-                            // sh 'sudo docker start APITestCameraInterface'
-                            // sh 'sudo docker exec APITestCameraInterface dpkg -i /home/Mech-Eye_API_2.3.0_amd64.deb'
-                            // sh 'sudo docker exec APITestCameraInterface mkdir -p /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            // sh 'sudo docker exec APITestCameraInterface cmake -S /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src -B /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            // sh 'sudo docker exec APITestCameraInterface make -C /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build'
-                            // sh 'sudo docker exec APITestCameraInterface /home/MMIND_TEST_CI_main/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Camera* --ip=${IP1}'
+                            sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestPythonProfilerInterface mecheyeenvimage'
+                            sh 'sudo docker start APITestPythonProfilerInterface'
+                            sh 'sudo docker exec APITestPythonProfilerInterface python3 -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            
+                            sh 'sudo docker exec APITestPythonProfilerInterface dpkg -i ${DebianPackage}'
+                            sh 'sudo docker exec APITestPythonProfilerInterface python3 -m pip install ${WheelPackage} -i https://pypi.tuna.tsinghua.edu.cn/simple'
+
+                            sh 'sudo docker exec APITestPythonProfilerInterface python3 -m pip install -r /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            sh 'sudo docker exec APITestPythonProfilerInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py ${IP1}'
                         }
                     }
                 }
