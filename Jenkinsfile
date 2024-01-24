@@ -9,12 +9,12 @@ pipeline {
         WheelPackage = '/home/MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
     }
     stages {
-        stage('Clone test code'){
-            steps{
-                sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_TEST_CI_main*'
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '2c5b2149-4914-4b15-bd7a-af703dddf0da', url: 'https://github.com/changlelian/MechMindAPICI.git']])
-            }
-        }
+        // stage('Clone test code'){
+        //     steps{
+        //         sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_TEST_CI_main*'
+        //         checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '2c5b2149-4914-4b15-bd7a-af703dddf0da', url: 'https://github.com/changlelian/MechMindAPICI.git']])
+        //     }
+        // }
 
         // stage('Update mecheye device firmware') {
         //     steps {
@@ -153,21 +153,44 @@ pipeline {
 
     post {
         always {
-            sh 'sudo docker stop $(sudo docker ps -q) && sudo docker rm -f $(sudo docker ps -aq)'
-            sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_main/allure-results/'
+            // sh 'sudo docker stop $(sudo docker ps -q) && sudo docker rm -f $(sudo docker ps -aq)'
+            // sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_main/allure-results/'
 
-            // 将测试报告文件移动到jenkins默认的工作路径下
-            sh 'mkdir -p allure-results && find /var/lib/jenkins/workspace/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/report/ -name "*.json" -print0 | xargs -0 cp -t /var/lib/jenkins/workspace/MMIND_TEST_CI_main/allure-results/'
+            // // 将测试报告文件移动到jenkins默认的工作路径下
+            // sh 'mkdir -p allure-results && find /var/lib/jenkins/workspace/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/report/ -name "*.json" -print0 | xargs -0 cp -t /var/lib/jenkins/workspace/MMIND_TEST_CI_main/allure-results/'
 
-            //Allure report
-            allure([
-                includeProperties: false,
-                jdk: '',
-                properties: [],
-                reportBuildPolicy: 'ALWAYS',
-                results: [[path: 'allure-results']]
-            ])
-
+            // //Allure report
+            // allure([
+            //     includeProperties: false,
+            //     jdk: '',
+            //     properties: [],
+            //     reportBuildPolicy: 'ALWAYS',
+            //     results: [[path: 'allure-results']]
+            // ])
+            cleanDocker()
+            moveReportWorkSpace()
+            generateAllureReport()
         }
     }
+}
+
+def cleanDocker(){
+    sh 'sudo docker stop $(sudo docker ps -q) && sudo docker rm -f $(sudo docker ps -aq)'
+}
+
+def moveReportWorkSpace(){
+    // sh 'sudo rm -rf /var/lib/jenkins/workspace/MMIND_main/allure-results/'
+    // 将测试报告文件移动到jenkins默认的工作路径下
+    sh 'mkdir -p allure-results && find /var/lib/jenkins/workspace/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/report/ -name "*.json" -print0 | xargs -0 cp -t /var/lib/jenkins/workspace/MMIND_TEST_CI_main/allure-results/'
+
+}
+
+def generateAllureReport(){
+        allure([
+        includeProperties: false,
+        jdk: '',
+        properties: [],
+        reportBuildPolicy: 'ALWAYS',
+        results: [[path: 'allure-results']]
+    ])
 }
