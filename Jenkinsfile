@@ -147,13 +147,13 @@ pipeline {
 
     }
 
-    post {
-        always {
-            cleanDocker()
-            moveReportWorkSpace()
-            generateAllureReport()
-        }
-    }
+    // post {
+    //     always {
+    //         cleanDocker()
+    //         moveReportWorkSpace()
+    //         generateAllureReport()
+    //     }
+    // }
 }
 
 
