@@ -29,6 +29,9 @@ void ParseCommandLine(int argc, char** argv) {
         globalProfiler = profiler;
         std::cout << "Profiler connect successfully. " << std::endl;
     }
+    else if (globalIpAddress == "127.0.0.1"){
+        std::cout << "Virtual profiler connect successfully."
+    }
     else
     {
         std::cerr << "Mech eye connect faild. Please check the device network.";

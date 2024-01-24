@@ -94,52 +94,57 @@ pipeline {
 
         stage('Parallel Execute Python Stages') {
             parallel {
-                // stage('Test python camera interface in linux') {
-                //     steps {
-                //         script {
-                //             sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestPythonCameraInterface mecheyeenvimage'
-                //             sh 'sudo docker start APITestPythonCameraInterface'
-                //             sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                stage('Test python camera interface in linux') {
+                    steps {
+                        script {
+                            // sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestPythonCameraInterface mecheyeenvimage'
+                            // sh 'sudo docker start APITestPythonCameraInterface'
+                            // sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple'
                             
-                //             sh 'sudo docker exec APITestPythonCameraInterface dpkg -i /home/${DebianPackage}'
-                //             sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install ${WheelPackage} -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            // sh 'sudo docker exec APITestPythonCameraInterface dpkg -i /home/${DebianPackage}'
+                            // sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install ${WheelPackage} -i https://pypi.tuna.tsinghua.edu.cn/simple'
 
-                //             sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install -r /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'
-                //             sh 'sudo docker exec APITestPythonCameraInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py ${CAM_IP}'
+                            // sh 'sudo docker exec APITestPythonCameraInterface python3 -m pip install -r /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            // sh 'sudo docker exec APITestPythonCameraInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py ${CAM_IP}'
 
-                //         }
-                //     }
-                // }
+                            dockerRunAndExec('APITestPythonProfilerInterface', 'mecheyeenvimage', [
+                                    "python3 -m pip install --upgrade pip -i ${PIP_MIRRORS}",
+                                    "dpkg -i /home/${DEB_PACKAGE}",
+                                    "python3 -m pip install /home/${WHEEL_PACKAGE} -i ${PIP_MIRRORS}",
+                                    "python3 -m pip install -r /home/${WORKSPACE}/MechEyePythonAutoTestProject/requirements.txt -i ${PIP_MIRRORS}",
+                                    "python3 /home/${WORKSPACE}/MechEyePythonAutoTestProject/main.py ${CAM_IP}"
+                                ])
+                        }
+                    }
+                }
 
-                // stage('Test python profiler interface in linux') {
-                //     steps {
-                //         script {
-                //             sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestPythonProfilerInterface mecheyeenvimage'
-                //             sh 'sudo docker start APITestPythonProfilerInterface'
-                //             sh 'sudo docker exec APITestPythonProfilerInterface python3 -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                stage('Test python profiler interface in linux') {
+                    steps {
+                        script {
+                            sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestPythonProfilerInterface mecheyeenvimage'
+                            // sh 'sudo docker start APITestPythonProfilerInterface'
+                            // sh 'sudo docker exec APITestPythonProfilerInterface python3 -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple'
                             
-                //             sh 'sudo docker exec APITestPythonProfilerInterface dpkg -i /home/${DebianPackage}'
-                //             sh 'sudo docker exec APITestPythonProfilerInterface python3 -m pip install ${WheelPackage} -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            // sh 'sudo docker exec APITestPythonProfilerInterface dpkg -i /home/${DebianPackage}'
+                            // sh 'sudo docker exec APITestPythonProfilerInterface python3 -m pip install ${WheelPackage} -i https://pypi.tuna.tsinghua.edu.cn/simple'
 
-                //             sh 'sudo docker exec APITestPythonProfilerInterface python3 -m pip install -r /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'
-                //             sh 'sudo docker exec APITestPythonProfilerInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py ${LNX_IP}'
-                //         }
-                //     }
-                // }
+                            // sh 'sudo docker exec APITestPythonProfilerInterface python3 -m pip install -r /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'
+                            // sh 'sudo docker exec APITestPythonProfilerInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py ${LNX_IP}'
+                        
+                            dockerRunAndExec('APITestPythonProfilerInterface', 'mecheyeenvimage', [
+                                    "python3 -m pip install --upgrade pip -i ${PIP_MIRRORS}",
+                                    "dpkg -i /home/${DEB_PACKAGE}",
+                                    "python3 -m pip install /home/${WHEEL_PACKAGE} -i ${PIP_MIRRORS}",
+                                    "python3 -m pip install -r /home/${WORKSPACE}/MechEyePythonAutoTestProject/requirements.txt -i ${PIP_MIRRORS}",
+                                    "python3 /home/${WORKSPACE}/MechEyePythonAutoTestProject/main.py ${LNX_IP}"
+                                ])
+                        }
+                    }
+                }
 
                 stage('Test python virtual profiler interface in linux') {
                     steps {
                         script {
-                            // sh 'sudo docker run -d -t -v /var/lib/jenkins/workspace:/home --name APITestPythonVirtualProfilerInterface mecheyeenvimage'
-                            // sh 'sudo docker start APITestPythonVirtualProfilerInterface'
-                            // sh 'sudo docker exec APITestPythonVirtualProfilerInterface python3 -m pip install --upgrade pip -i https://pypi.tuna.tsinghua.edu.cn/simple'
-                            
-                            // sh 'sudo docker exec APITestPythonVirtualProfilerInterface dpkg -i /home/${DebianPackage}'
-                            // sh 'sudo docker exec APITestPythonVirtualProfilerInterface python3 -m pip install ${WheelPackage} -i https://pypi.tuna.tsinghua.edu.cn/simple'
-
-                            // sh 'sudo docker exec APITestPythonVirtualProfilerInterface python3 -m pip install -r /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple'
-                            // sh 'sudo docker exec APITestPythonVirtualProfilerInterface python3 /home/MMIND_TEST_CI_main/MechEyePythonAutoTestProject/main.py 127.0.0.1'
-                        
                             dockerRunAndExec('APITestPythonVirtualProfilerInterface', 'mecheyeenvimage', [
                                 "python3 -m pip install --upgrade pip -i ${PIP_MIRRORS}",
                                 "dpkg -i /home/${DEB_PACKAGE}",
