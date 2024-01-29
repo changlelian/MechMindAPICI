@@ -1,6 +1,6 @@
 {
     "mraw": [
-        {"mraw_path": "C:\\Users\\mech-mind_lcl\\Desktop\\MechEyeAPITestProject\\MechEyeCppAutoTestProject\\resource\\test.mraw"},
+        {"mraw_path": "home/test.mraw"},
         {"model_name": "Mech-Eye LNX-8300"},
         {"controller_sn": "LCA00237A201YD52"},
         {"sensor_sn": "LX300236A205YE09"},
