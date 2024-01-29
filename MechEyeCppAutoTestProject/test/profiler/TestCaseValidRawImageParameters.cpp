@@ -83,18 +83,22 @@ TEST_P(ProfilerParameterAnalogGain, AnalogGain) {
     std::pair<std::string, int> modeMap = GetParam();
     std::cout << modeMap.first  << modeMap.second << std::endl;
 
-    switch (JudgeProfilerType(profiler))
+    switch (getProfilerAnalogGainType(modelName))
     {
-    case ProfilerType::LNX_8030:
+    case ProfilerAnalogGainType::AnalogGain_1_to_4:
+        if (modeMap.second != 4)
+            testEnumValue(profiler, brightness_settings::AnalogGain::name, modeMap);
         break;
-    
-    default:
+    case ProfilerAnalogGainType::AnalogGain_1_to_5:
         testEnumValue(profiler, brightness_settings::AnalogGain::name, modeMap);
+        break;
+    default:
+        FAIL();
         break;
     }
 }
 INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterAnalogGain,
-    ::testing::Values(std::make_pair("Gain_1_0", 0), std::make_pair("Gain_1_3", 1), std::make_pair("Gain_1_9", 2), std::make_pair("Gain_2_8", 3), std::make_pair("Gain_5_5", 4)));
+    ::testing::Values(std::make_pair("Gain_1", 0), std::make_pair("Gain_2", 1), std::make_pair("Gain_3", 2), std::make_pair("Gain_4", 3), std::make_pair("Gain_5", 4)));
 
 
 

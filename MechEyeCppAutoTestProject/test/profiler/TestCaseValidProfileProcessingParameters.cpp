@@ -63,6 +63,7 @@ INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterGapFilling, ::testing::Ran
 // [GapFillingEdgePreservation]: Testing the [set/getValue] Interface with Normal Values
 TEST_P(ProfilerParameterGapFillingEdgePreservation, GapFillingEdgePreservation) {
     const int setValue = GetParam();
+    testIntValue(profiler, profile_processing::GapFilling::name, 1);
     // by namespace
     testIntValue(profiler, profile_processing::GapFillingEdgePreservation::name, setValue);
 }

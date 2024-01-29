@@ -5,16 +5,23 @@
  ProfilerType JudgeProfilerType(mmind::eye::Profiler& profiler) {
      mmind::eye::ProfilerInfo info;
      profiler.getProfilerInfo(info);
-     if (info.model == "Mech-Eye LNX 8300")
+     if (info.model == "Mech-Eye LNX-8300")
          return ProfilerType::LNX_8300;
      else if (info.model == "Mech-Eye LNX-8030")
          return ProfilerType::LNX_8030;
-     else if (info.model == "Mech-Eye LNX 8080")
+     else if (info.model == "Mech-Eye LNX-8080")
          return ProfilerType::LNX_8080;
      else
          return ProfilerType::UnkonwType;
  }
 
+ ProfilerAnalogGainType getProfilerAnalogGainType(std::string& modeName) {
+     if (modeName == "Mech-Eye LNX-8300" || modeName == "Mech-Eye LNX-8080" ||
+         modeName == "Mech-Eye LNX-75300" || modeName == "Mech-Eye LNX-7580")
+         return ProfilerAnalogGainType::AnalogGain_1_to_5;
+     else
+         return ProfilerAnalogGainType::AnalogGain_1_to_4;
+ }
 
 
 void testProStautsSuccessful(const ErrorStatus& status, int code, std::string description, bool isMatch) {

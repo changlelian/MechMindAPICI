@@ -22,6 +22,15 @@ enum class ProfilerType
 
 ProfilerType JudgeProfilerType(mmind::eye::Profiler& profiler);
 
+
+enum class ProfilerAnalogGainType
+{
+    AnalogGain_1_to_4,
+    AnalogGain_1_to_5
+};
+ProfilerAnalogGainType getProfilerAnalogGainType(std::string& modeName);
+
+
 /**
  * @brief 
  */
