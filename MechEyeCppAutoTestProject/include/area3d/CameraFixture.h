@@ -167,6 +167,12 @@ class CameraAttribute :public CameraSDKFixture {
 };
 
 /**
+*      Couple Parameter 
+*/
+class CameraCouplingParameters :public CameraSDKFixture {
+};
+
+/**
 *      UserSetManager
 */
 class CameraUserSetsManager :public CameraSDKFixture {

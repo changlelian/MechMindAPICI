@@ -95,6 +95,12 @@ enum class CameraProjectorCodingTranslucentMode {
 CameraProjectorCodingTranslucentMode getProjectorCodingTranslucentModeCameraType(const std::string& input);
 
 
+enum class CameraCodingModeReflective {
+    ReflectiveModeCamera,  // Translucent mode Pro S/M  LSR
+    OtherCamera
+};
+CameraCodingModeReflective getCodingModeReflectiveCameraType(const std::string& input);
+
 /*******************************************************************************************************************
 *                                                                Function tool
 *******************************************************************************************************************/
@@ -108,6 +114,9 @@ void ExpectVectorsAlmostEqual(const std::vector<double>& vec1, const std::vector
 void isIncludeUserSet(mmind::eye::UserSetManager& usm, const std::string& userSetName, bool flag);
 
 void testStautsSuccessful(const mmind::eye::ErrorStatus& status, int code=0, std::string description="");
+
+void testStautsFailed(const mmind::eye::ErrorStatus& status, int code = 0, std::string description = "");
+
 
 /*******************************************************************************************************************
 *                                                               Parameter Test

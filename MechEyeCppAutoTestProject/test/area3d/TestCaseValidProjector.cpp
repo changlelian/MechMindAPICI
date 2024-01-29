@@ -18,7 +18,7 @@ TEST_P(CameraParametersProjectorPowerLevel, ProjectorPowerLevel) {
 		break;
 	}
 	default:
-		std::cout << "The camera is Not Projector PowerLevel Camera series" << std::endl;
+		std::cout << "The camera is not projector power level camera series" << std::endl;
 		break;
 	}
 }
@@ -40,16 +40,17 @@ TEST_P(CameraParametersProjectorFringeCodingMode, ProjectorFringeCodingMode) {
 	}
 
 	if (getProjectorCodingTranslucentModeCameraType(modelName) == CameraProjectorCodingTranslucentMode::OtherCamera) {
-		if (modeMap.second != 2) {
+		if (modeMap.second != 2 && modeMap.second != 3)  {
 			testEnumValue(camera, projector_setting::FringeCodingMode::name, modeMap);
 		}
 	}
 	else {
+		// pro serious
 		testEnumValue(camera, projector_setting::FringeCodingMode::name, modeMap);
 	}
 }
 INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraParametersProjectorFringeCodingMode,
-	::testing::Values(std::make_pair("Fast", 0), std::make_pair("Accurate", 1), std::make_pair("Translucent", 2) ));
+	::testing::Values(std::make_pair("Fast", 0), std::make_pair("Accurate", 1), std::make_pair("Translucent", 2), std::make_pair("Reflective", 3)));
 
 
 
@@ -62,6 +63,7 @@ TEST_P(CameraParametersProjectorAntiFlickerMode, ProjectorAntiFlickerMode) {
 	{
 	case CameraProjectorAntiflicker::ProjectorAntiflickerCamera:
 	{
+		testEnumValue(camera, projector_setting::FringeCodingMode::name, std::make_pair("Fast", 0));
 		testEnumValue(camera, projector_setting::AntiFlickerMode::name, modeMap);
 		break;
 	}

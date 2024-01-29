@@ -8,7 +8,7 @@ using namespace mmind::eye;
 
 
 // [Scan2DExposureMode]: Testing the [set/getIntValue] Interface with Normal Values
-TEST_P(CameraScan2DExposureMode, CameraScan2DExposureModeEnum) {
+TEST_P(CameraScan2DExposureMode, Scan2DExposureMode) {
 	const std::pair<std::string, int> modeMap = GetParam();
 
 	switch (get2DExposureModeCamera(CameraSDKFixture::modelName))
@@ -42,6 +42,8 @@ TEST_P(CameraScan2DExposureTime, Scan2DExposureTimeDouble) {
 	const double setValue = GetParam();
 	const double result = fmod(setValue, 4.0);
 
+
+	testEnumValue(camera, scanning2d_setting::ExposureMode::name, std::make_pair("Timed", 0));
 
 	switch (get2DExposureCameraType(CameraSDKFixture::modelName))
 	{
@@ -83,6 +85,8 @@ INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraScan2DSharpenFactor, ::test
 // [ExpectedGrayValue]: Testing the [set/getIntValue] Interface with Normal Values
 TEST_P(CameraScan2DExpectedGrayValue, Scan2DExpectedGrayValueInt) {
 	const int setValue = GetParam();
+	testEnumValue(camera, scanning2d_setting::ExposureMode::name, std::make_pair("Auto", 1));
+
 	// by namespace
 	testIntValue(camera, scanning2d_setting::ExpectedGrayValue::name, setValue);
 }
@@ -97,6 +101,9 @@ INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraScan2DExpectedGrayValue, ::
 // [Scan2DToneMappingEnable]: Testing the [set/getIntValue] Interface with Normal Values
 TEST_P(CameraScan2DToneMappingEnable, Scan2DToneMappingEnable) {
 	const bool setValue = GetParam();
+
+	testEnumValue(camera, scanning2d_setting::ExposureMode::name, std::make_pair("HDR", 2));
+
 	// by namespace
 	testBoolValue(camera, scanning2d_setting::ToneMappingEnable::name, setValue);
 }
@@ -107,7 +114,10 @@ INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraScan2DToneMappingEnable, ::
 
 
 // [Scan2DROI]: Testing the [set/getIntValue] Interface with Normal Values
-TEST_F(CameraScan2DROI, Scan2DROIRoi) {
+TEST_F(CameraScan2DROI, Scan2DROI) {
+
+	testEnumValue(camera, scanning2d_setting::ExposureMode::name, std::make_pair("Auto", 1));
+
 
 	// height < width
 	for (int roiHeight = 0; roiHeight <= colorHeightResolution; roiHeight++)
@@ -143,6 +153,8 @@ TEST_F(CameraScan2DROI, Scan2DROIRoi) {
 TEST_P(CameraHDRExposureSequence, Scan2DHDRExposureSequenceFloatArray) {
 	const double setValue = GetParam();
 	const double result = fmod(setValue, 4.0);
+
+	testEnumValue(camera, scanning2d_setting::ExposureMode::name, std::make_pair("HDR", 2));
 
 	switch (getScanHDRExposureTypeCameraType(CameraSDKFixture::modelName))
 	{
@@ -201,6 +213,7 @@ TEST_P(CameraDepthSourceExposureTime, DepthSourceExposureTime) {
 	switch (getDepthSourceExposureCameraType(CameraSDKFixture::modelName))
 	{
 	case CameraDepthSourceExposure::DepthSourceExposureCamera:
+		testEnumValue(camera, scanning2d_setting::DepthSourceExposureMode::name, std::make_pair("Timed", 0));
 		testDoubleValue(camera, scanning2d_setting::DepthSourceExposureTime::name, setValue * SCALE_FACTOR);
 		break;
 

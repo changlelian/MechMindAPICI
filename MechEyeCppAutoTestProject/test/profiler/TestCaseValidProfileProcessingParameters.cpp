@@ -18,11 +18,14 @@ INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterFilter,
 
 
 
-// [DepthTriggerSource]: Testing the [set/getEnumValue] Interface with Normal Values
-TEST_P(ProfilerParameterMeanFilterWindowSize, DepthTriggerSourceEnumValue) {
+// [MeanFilterWindowSize]: Testing the [set/getEnumValue] Interface with Normal Values
+TEST_P(ProfilerParameterMeanFilterWindowSize, MeanFilterWindowSize) {
 
 	std::pair<std::string, int> modeMap = GetParam();
     std::cout << modeMap.first  << modeMap.second << std::endl;
+
+    testEnumValue(profiler, profile_processing::Filter::name, std::make_pair("Mean", 1));
+
     testEnumValue(profiler, profile_processing::MeanFilterWindowSize::name, modeMap);
 }
 INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterMeanFilterWindowSize,
@@ -31,11 +34,13 @@ INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterMeanFilterWindowSize,
 
 
 
-// [DepthTriggerSource]: Testing the [set/getEnumValue] Interface with Normal Values
+// [MedianFilterWindowSize]: Testing the [set/getEnumValue] Interface with Normal Values
 TEST_P(ProfilerParameterMedianFilterWindowSize, MedianFilterWindowSize) {
 
 	std::pair<std::string, int> modeMap = GetParam();
     std::cout << modeMap.first  << modeMap.second << std::endl;
+    testEnumValue(profiler, profile_processing::Filter::name, std::make_pair("Median", 2));
+
     testEnumValue(profiler, profile_processing::MedianFilterWindowSize::name, modeMap);
 }
 INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterMedianFilterWindowSize,
@@ -61,7 +66,7 @@ TEST_P(ProfilerParameterGapFillingEdgePreservation, GapFillingEdgePreservation) 
     // by namespace
     testIntValue(profiler, profile_processing::GapFillingEdgePreservation::name, setValue);
 }
-INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterGapFillingEdgePreservation, ::testing::Range(0, 6));
+INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterGapFillingEdgePreservation, ::testing::Range(1, 6));
 
 
 

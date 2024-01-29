@@ -54,17 +54,15 @@ INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraInvalidParametersLaserFring
 
 TEST_P(CameraInvalidParametersLaserFramePartitionCount, LaserFramePartitionCount) {
 	int  setValue = GetParam();
-	switch (getSpecificCameraType(modelName))
-	{
-	case SpecificCameraType::LaserCameras:
-	{
-		testInvalidIntValue(camera, laser_setting::FramePartitionCount::name, setValue, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
-		break;
-	}
-	default:
-		GTEST_SKIP();
+
+	if (getSpecificCameraType(modelName) != SpecificCameraType::LaserCameras) {
 		std::cout << "The camera is not Laser series" << std::endl;
-		break;
+		return;
 	}
+	if (getCodingModeReflectiveCameraType(modelName) == CameraCodingModeReflective::ReflectiveModeCamera) {
+		testEnumValue(camera, laser_setting::FringeCodingMode::name, std::make_pair("Fast", 0));
+	}
+	testInvalidIntValue(camera, laser_setting::FramePartitionCount::name, setValue, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
+
 }
 INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraInvalidParametersLaserFramePartitionCount, ::testing::Values(0, 5));

@@ -156,6 +156,19 @@ CameraProjectorCodingTranslucentMode getProjectorCodingTranslucentModeCameraType
     return CameraProjectorCodingTranslucentMode::OtherCamera;
 }
 
+
+CameraCodingModeReflective getCodingModeReflectiveCameraType(const std::string& input) {
+    static const std::unordered_map<std::string, CameraCodingModeReflective> reflectiveModeMap = {
+    {"Mech-Eye PRO S", CameraCodingModeReflective::ReflectiveModeCamera},
+    {"Mech-Eye PRO M", CameraCodingModeReflective::ReflectiveModeCamera}
+    };
+    auto it = reflectiveModeMap.find(input);
+    if (it != reflectiveModeMap.end()) {
+        return it->second;
+    }
+    return CameraCodingModeReflective::OtherCamera;
+}
+
 /*******************************************************************************************************************
 *                                                                Function tool
 *******************************************************************************************************************/
@@ -208,6 +221,12 @@ void isIncludeUserSet(mmind::eye::UserSetManager& usm, const std::string& userSe
 void testStautsSuccessful(const mmind::eye::ErrorStatus& status, int code, std::string description) {
     EXPECT_EQ(status.errorCode, code);
     EXPECT_EQ(status.errorDescription, description);
+}
+
+
+void testStautsFailed(const mmind::eye::ErrorStatus& status, int code, std::string description) {
+    EXPECT_NE(status.errorCode, code);
+    EXPECT_NE(status.errorDescription, description);
 }
 
 

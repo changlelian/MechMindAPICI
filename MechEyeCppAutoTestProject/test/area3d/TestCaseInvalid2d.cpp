@@ -31,6 +31,8 @@ INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraInvalidParametersScan2DExpo
 TEST_P(CameraInvalidParametersScan2DExposureTime, Scan2DExposureTimeDouble) {
 	const double setValue = GetParam();
 
+	testEnumValue(camera, scanning2d_setting::ExposureMode::name, std::make_pair("Timed", 0));
+
 	switch (get2DExposureCameraType(CameraSDKFixture::modelName))
 	{
 	case Camera2DExposure::Exposure42D:
@@ -53,7 +55,7 @@ INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraInvalidParametersScan2DExpo
 
 
 
-TEST_P(CameraInvalidParametersScan2DSharpenFactor, Scan3DGain) {
+TEST_P(CameraInvalidParametersScan2DSharpenFactor, Scan2DSharpenFactorouble) {
 
 	double  setValue = GetParam();
 	testInvalidDoubleValue(camera, scanning2d_setting::SharpenFactor::name, setValue, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
@@ -69,6 +71,8 @@ INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraInvalidParametersScan2DShar
 
 TEST_P(CameraInvalidParametersScan2DExpectedGrayValue, Scan2DExpectedGrayValue) {
 
+	testEnumValue(camera, scanning2d_setting::ExposureMode::name, std::make_pair("Auto", 1));
+
 	int  setValue = GetParam();
 	testInvalidIntValue(camera, scanning2d_setting::ExpectedGrayValue::name, setValue, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
 }
@@ -82,6 +86,8 @@ INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraInvalidParametersScan2DExpe
 
 
 TEST_F(CameraInvalidParametersScan2DROI, Scan2DROI) {
+
+	testEnumValue(camera, scanning2d_setting::ExposureMode::name, std::make_pair("Auto", 1));
 
 	mmind::eye::ROI roi1{0, 0, static_cast<size_t>(colorWidthResolution) + 1,static_cast<size_t>(colorHeightResolution)},
 		            roi2{0, 0, static_cast<size_t>(colorWidthResolution),static_cast<size_t>(colorHeightResolution) + 1},
@@ -105,6 +111,8 @@ TEST_F(CameraInvalidParametersScan2DROI, Scan2DROI) {
 
 
 TEST_P(CameraInvalidParametersScan2DHDRExposureSequence, Scan2DHDRExposureSequence) {
+
+	testEnumValue(camera, scanning2d_setting::ExposureMode::name, std::make_pair("HDR", 2));
 
 	const std::vector<double>  setValue = GetParam();
 	switch (getScanHDRExposureTypeCameraType(CameraSDKFixture::modelName))
@@ -175,7 +183,8 @@ TEST_P(CameraInvalidDepthSourceExposureTime, DepthSourceExposureTime) {
 	switch (getDepthSourceExposureCameraType(CameraSDKFixture::modelName))
 	{
 	case CameraDepthSourceExposure::DepthSourceExposureCamera:
-		testInvalidDoubleValue(camera, scanning2d_setting::ExposureTime::name, setValue, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
+		testEnumValue(camera, scanning2d_setting::DepthSourceExposureMode::name, std::make_pair("Timed", 0));
+		testInvalidDoubleValue(camera, scanning2d_setting::DepthSourceExposureTime::name, setValue, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
 		break;
 
 	default:

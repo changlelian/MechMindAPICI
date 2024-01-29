@@ -26,6 +26,12 @@ void testProStautsSuccessful(const ErrorStatus& status, int code, std::string de
     }
 }
 
+
+void testProStautsFailed(const ErrorStatus& status, int code, std::string description) {
+    EXPECT_NE(status.errorCode, code);
+    EXPECT_NE(status.errorDescription, description);
+}
+
 /*******************************************************************************************************************
 *                                                                Valid Parameter Test
 *******************************************************************************************************************/

@@ -2,6 +2,7 @@
 #include "area3d/CameraFixture.h"
 #include "area3d/CameraFunction.h"
 #include "area_scan_3d_camera/parameters/PointCloudProcessing.h"
+#include "area_scan_3d_camera/parameters/Projector.h"
 
 using namespace mmind::eye;
 
@@ -44,7 +45,18 @@ INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraInvalidParametersPointCloud
 
 TEST_P(CameraInvalidParametersPointCloudEdgePreservation, PointCloudEdgePreservation) {
 	std::pair<std::string, int> modeMap = GetParam();
-	testInvalidEnumValue(camera, pointcloud_processing_setting::EdgePreservation::name, modeMap, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
+
+	switch (getProjectorCodingTranslucentModeCameraType(modelName))
+	{
+	case CameraProjectorCodingTranslucentMode::TranslucentModeCamera:
+		// PRO S/M
+		testEnumValue(camera, projector_setting::FringeCodingMode::name, std::make_pair("Fast", 0));
+		testInvalidEnumValue(camera, pointcloud_processing_setting::EdgePreservation::name, modeMap, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
+		break;
+	default:
+		testInvalidEnumValue(camera, pointcloud_processing_setting::EdgePreservation::name, modeMap, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
+		break;
+	}
 }
 INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraInvalidParametersPointCloudEdgePreservation,
 	::testing::Values(std::make_pair("", -1), std::make_pair("Test", 3)));
@@ -56,7 +68,18 @@ INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraInvalidParametersPointCloud
 
 TEST_P(CameraInvalidParametersPointCloudFringeContrastThreshold, FringeContrastThreshold) {
 	int modeMap = GetParam();
-	testInvalidIntValue(camera, pointcloud_processing_setting::FringeContrastThreshold::name, modeMap,  ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
+	switch (getCodingModeReflectiveCameraType(modelName)) 
+	{
+	case  CameraCodingModeReflective::OtherCamera:
+		testInvalidIntValue(camera, pointcloud_processing_setting::FringeContrastThreshold::name, modeMap,  ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
+		break;
+	case CameraCodingModeReflective::ReflectiveModeCamera:
+		testEnumValue(camera, projector_setting::FringeCodingMode::name, std::make_pair("Fast", 0));
+		testInvalidIntValue(camera, pointcloud_processing_setting::FringeContrastThreshold::name, modeMap, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
+		break;
+	default:
+		break;
+	}
 }
 INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraInvalidParametersPointCloudFringeContrastThreshold,
 	::testing::Values(0, 101));
@@ -67,9 +90,21 @@ INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraInvalidParametersPointCloud
 
 
 
-TEST_P(CameraInvalidParametersPointCloudFringeMinThreshold, FringeContrastThreshold) {
+TEST_P(CameraInvalidParametersPointCloudFringeMinThreshold, FringeMinThreshold) {
 	int modeMap = GetParam();
-	testInvalidIntValue(camera, pointcloud_processing_setting::FringeMinThreshold::name, modeMap, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
+	
+	switch (getCodingModeReflectiveCameraType(modelName))
+	{
+	case  CameraCodingModeReflective::OtherCamera:
+		testInvalidIntValue(camera, pointcloud_processing_setting::FringeMinThreshold::name, modeMap, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
+		break;
+	case CameraCodingModeReflective::ReflectiveModeCamera:
+		testEnumValue(camera, projector_setting::FringeCodingMode::name, std::make_pair("Fast", 0));
+		testInvalidIntValue(camera, pointcloud_processing_setting::FringeMinThreshold::name, modeMap, ErrorStatus::MMIND_STATUS_OUT_OF_RANGE_ERROR);
+		break;
+	default:
+		break;
+	}
 }
 INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraInvalidParametersPointCloudFringeMinThreshold,
 	::testing::Values(0, 101));

@@ -26,6 +26,7 @@ add_executable(MechEyeCppAutoTestProject
     ${PROJECT_DIR}/test/area3d/TestCaseValidProjector.cpp
     ${PROJECT_DIR}/test/area3d/TestCaseValidPointCloud.cpp
     ${PROJECT_DIR}/test/area3d/TestCaseValidParameterAttribute.cpp
+    ${PROJECT_DIR}/test/area3d/TestCaseValidCouplingParameters.cpp
 
     ${PROJECT_DIR}/test/area3d/TestCaseInvalidUserSet.cpp
     ${PROJECT_DIR}/test/area3d/TestCaseInvalid2d.cpp
@@ -42,7 +43,7 @@ add_executable(MechEyeCppAutoTestProject
     ${PROJECT_DIR}/test/profiler/TestCaseValidRawImageParameters.cpp
     ${PROJECT_DIR}/test/profiler/TestCaseValidProfileProcessingParameters.cpp
     ${PROJECT_DIR}/test/profiler/TestCaseValidProfileExtractionParameters.cpp
-
+    ${PROJECT_DIR}/test/profiler/TestCaseValidProfilerCouplingParameters.cpp
 
 
 

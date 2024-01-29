@@ -28,7 +28,8 @@ TEST_P(ProfilerParameterExposureTime, ExposureTime) {
         std::cout << "wei wan cheng " << std::endl;
         break;
     case 1:
-    
+        testEnumValue(profiler, brightness_settings::ExposureMode::name, std::make_pair("Timed", 1));
+
         testEnumValue(profiler, brightness_settings::ExposureMode::name, modeMap);
         for (int setvalue = 4; setvalue <=5200; setvalue+=4)
             testIntValue(profiler, brightness_settings::ExposureTime::name, setvalue);
@@ -47,6 +48,9 @@ INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterExposureTime,
 
 // [HdrFirstThreshold]: Testing the [set/getValue] Interface with Normal Values
 TEST_P(ProfilerParameterHdrFirstThreshold, HdrFirstThreshold) {
+
+    testEnumValue(profiler, brightness_settings::ExposureMode::name, std::make_pair("HDR", 0));
+
 	const double setValue = GetParam() * 0.100;
 	// by namespace
 	testDoubleValue(profiler, brightness_settings::HdrFirstThreshold::name, setValue);
@@ -61,6 +65,9 @@ INSTANTIATE_TEST_SUITE_P(Parameters, ProfilerParameterHdrFirstThreshold, ::testi
 // [HdrSecondThreshold]: Testing the [set/getValue] Interface with Normal Values
 TEST_P(ProfilerParameterHdrSecondThreshold, HdrSecondThreshold) {
 	const double setValue = GetParam() * 0.100;
+
+    testEnumValue(profiler, brightness_settings::ExposureMode::name, std::make_pair("HDR", 0));
+
 	// by namespace
 	testDoubleValue(profiler, brightness_settings::HdrSecondThreshold::name, setValue);
 }

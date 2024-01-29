@@ -192,3 +192,14 @@ class ProfilerParameterMinSharpness :
 class ProfilerParameterBrightnessAdjustment :
     public ProfilerSDKFixture, public ::testing::WithParamInterface<std::pair<std::string, int>> {
 };
+
+
+
+/**
+ * @brief ProfileExtractionParameters.h
+ *
+ */
+
+class ProfilerCouplingParameters : public ProfilerSDKFixture {
+};
+

@@ -28,6 +28,7 @@ ProfilerType JudgeProfilerType(mmind::eye::Profiler& profiler);
 
 void testProStautsSuccessful(const ErrorStatus& status, int code=0, std::string description="", bool isMatch=true);
 
+void testProStautsFailed(const ErrorStatus& status, int code = 0, std::string description = "");
 /*******************************************************************************************************************
 *                                                                Valid Parameter Test
 *******************************************************************************************************************/

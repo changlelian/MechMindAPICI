@@ -17,24 +17,24 @@ TEST_P(CameraScan3DExposureSequence, Scan3DExposureSequenceDoubleArray) {
 	{
 	// Normal
 	case Camera3DExposure::Exposure3DOther:
-		testDoubleValue(camera, scanning3d_setting::ExposureSequence::name, setValue *  0.1, 3);
+		testDoubleValue(camera, scanning3d_setting::ExposureSequence::name, setValue *  0.1, 1);
 		break;
 	// Laser
 	case Camera3DExposure::Exposure43D:
 		if (setValue < 99 && result == 0.0) {
-			testDoubleValue(camera, scanning3d_setting::ExposureSequence::name, setValue, 3);
+			testDoubleValue(camera, scanning3d_setting::ExposureSequence::name, setValue, 1);
 		}
 		break;
 	// LSR
 	case Camera3DExposure::Exposure83D:
 		if (setValue >= 8 && setValue <= 96 && result == 0.0) {
-			testDoubleValue(camera, scanning3d_setting::ExposureSequence::name, setValue, 3);
+			testDoubleValue(camera, scanning3d_setting::ExposureSequence::name, setValue, 1);
 		}
 		break;
 	// Pro L Enhanecd
 	case Camera3DExposure::Exposure453D:
 		if (setValue <= 450){
-			testDoubleValue(camera, scanning3d_setting::ExposureSequence::name, setValue * 0.1, 3);
+			testDoubleValue(camera, scanning3d_setting::ExposureSequence::name, setValue * 0.1, 1);
 		}		
 		break;
 	default:

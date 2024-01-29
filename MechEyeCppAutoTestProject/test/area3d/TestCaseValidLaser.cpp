@@ -17,7 +17,7 @@ TEST_P(CameraParametersLaserPowerLevel, LaserPowerLevel) {
 		break;
 	}
 	default:
-		std::cout << "The camera is Not Laser series" << std::endl;
+		std::cout << "The camera is not Laser series" << std::endl;
 		break;
 	}
 }
@@ -37,7 +37,7 @@ TEST_P(CameraParametersLaserFringeCodingMode, LaserFringeCodingMode) {
 		break;
 	}
 	default:
-		std::cout << "The camera is Not Laser series" << std::endl;
+		std::cout << "The camera is not Laser series" << std::endl;
 		break;
 	}
 }
@@ -50,16 +50,15 @@ INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraParametersLaserFringeCoding
 TEST_P(CameraParametersLaserFramePartitionCount, LaserFramePartitionCount) {
 
 	const int setValue = GetParam();
-	switch (getSpecificCameraType(modelName))
-	{
-	case SpecificCameraType::LaserCameras:
-	{
-		testIntValue(camera, laser_setting::FramePartitionCount::name, setValue);
-		break;
+
+	if (getSpecificCameraType(modelName) != SpecificCameraType::LaserCameras) {
+		std::cout << "The camera is not Laser series" << std::endl;
+		return;
 	}
-	default:
-		std::cout << "The camera is Not Laser series" << std::endl;
-		break;
+	if (getCodingModeReflectiveCameraType(modelName) == CameraCodingModeReflective::ReflectiveModeCamera) {
+		testEnumValue(camera, laser_setting::FringeCodingMode::name, std::make_pair("Fast", 0));
 	}
+	testIntValue(camera, laser_setting::FramePartitionCount::name, setValue);
+
 }
 INSTANTIATE_TEST_SUITE_P(CameraParametersTest, CameraParametersLaserFramePartitionCount, ::testing::Range(1, 5));
