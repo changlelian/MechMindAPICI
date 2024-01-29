@@ -34,7 +34,7 @@ pipeline {
             }
         }
 
-        stage('Parallel Execute Cpp Stages') {
+        stage('Parallel build Cpp Stages') {
             parallel {
                 stage('Build cpp amd64 samples') {
                     steps {
@@ -46,15 +46,29 @@ pipeline {
                     }
                 }
 
+                stage('Build cpp amd64 test case') {
+                    steps {
+                        script {
+                            dockerRunAndExec('APITestCaseBuildTest', 'mecheyeenvimage', [
+                                    "dpkg -i /home/${DEB_PACKAGE}",
+                                    "mkdir -p /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
+                                    "cmake -S /home/${WORKSPACE}/MechEyeCppAutoTestProject/src -B /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
+                                    "make -C /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build"
+                            ])
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Parallel Execute Cpp Stages') {
+            parallel {
                 stage('Test cpp camera interface in linux') {
                     steps {
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                             script {
                                 dockerRunAndExec('APITestCameraInterface', 'mecheyeenvimage', [
                                     "dpkg -i /home/${DEB_PACKAGE}",
-                                    "mkdir -p /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
-                                    "cmake -S /home/${WORKSPACE}/MechEyeCppAutoTestProject/src -B /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
-                                    "make -C /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
                                     "/home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Camera* --ip=${CAM_IP}"
                                 ])
                             }
@@ -69,9 +83,6 @@ pipeline {
                             script {      
                                 dockerRunAndExec('APITestProfilerInterface', 'mecheyeenvimage', [
                                     "dpkg -i /home/${DEB_PACKAGE}",
-                                    "mkdir -p /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
-                                    "cmake -S /home/${WORKSPACE}/MechEyeCppAutoTestProject/src -B /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
-                                    "make -C /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
                                     "/home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Profiler* --ip=${LNX_IP}"
                                 ])
                             }
@@ -86,9 +97,6 @@ pipeline {
                             script {
                                 dockerRunAndExec('APITestVirtualProfilerInterface', 'mecheyeenvimage', [
                                     "dpkg -i /home/${DEB_PACKAGE}",
-                                    "mkdir -p /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
-                                    "cmake -S /home/${WORKSPACE}/MechEyeCppAutoTestProject/src -B /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
-                                    "make -C /home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build",
                                     "/home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*ProVirtual* --ip=127.0.0.1"
                                 ])
                             }
