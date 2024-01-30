@@ -111,7 +111,7 @@ TEST_F(ProfilerCouplingParameters, TestFilterMedianMode) {
 
 
 // Exposure-HDR
-TEST_F(ProfilerCouplingParameters, TestExposureTimedMode) {
+TEST_F(ProfilerCouplingParameters, TestExposureHDRMode) {
     auto us = profiler.currentUserSet();
 
     // available
@@ -121,7 +121,22 @@ TEST_F(ProfilerCouplingParameters, TestExposureTimedMode) {
     testProStautsSuccessful(us.setFloatValue(mmind::eye::brightness_settings::HdrExposureTimeProportion1::name, 33));
     testProStautsSuccessful(us.setFloatValue(mmind::eye::brightness_settings::HdrExposureTimeProportion2::name, 37));
 
-    // not available
-    testProStautsFailed(us.setIntValue(mmind::eye::brightness_settings::ExposureTime::name, 100));
+    testProStautsSuccessful(us.setIntValue(mmind::eye::brightness_settings::ExposureTime::name, 100));
 
+}
+
+
+
+// Exposure-Timed
+TEST_F(ProfilerCouplingParameters, TestExposureTimedMode) {
+    auto us = profiler.currentUserSet();
+
+    // available
+    testProStautsSuccessful(us.setEnumValue(mmind::eye::brightness_settings::ExposureMode::name,
+        static_cast<int>(mmind::eye::brightness_settings::ExposureMode::Value::Timed)));
+
+    testProStautsSuccessful(us.setIntValue(mmind::eye::brightness_settings::ExposureTime::name, 100));
+    // not available
+    testProStautsFailed(us.setFloatValue(mmind::eye::brightness_settings::HdrExposureTimeProportion1::name, 33));
+    testProStautsFailed(us.setFloatValue(mmind::eye::brightness_settings::HdrExposureTimeProportion2::name, 37));
 }
