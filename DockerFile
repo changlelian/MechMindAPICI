@@ -1,0 +1,34 @@
+FROM ubuntu:focal
+MAINTAINER lianchangle<lian.changle@mechmind.net>
+
+
+RUN echo 'tzdata tzdata/Areas select Asia' | debconf-set-selections
+RUN echo 'tzdata tzdata/Zones/Asia select Shanghai' | debconf-set-selections
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update
+# install cmake
+RUN apt-get install -y build-essential pkg-config cmake
+# install pcl
+RUN apt-get install -y libpcl-dev
+# install opencv
+RUN apt install -y unzip
+RUN apt update && apt install -y unzip
+RUN apt install -y wget
+RUN wget -O opencv.zip https://github.com/opencv/opencv/archive/4.x.zip
+RUN unzip opencv.zip
+RUN mkdir build && cd build
+RUN cmake ../opencv-4.x
+RUN cmake --build .
+RUN make install
+
+# install git
+RUN apt install -y git
+
+# install python pip3
+RUN apt-get install -y python3-pip
+
+# copy SSH private password to docker image
+COPY /root/.ssh/id_rsa /root/.ssh/id_rsa
+# set private password privilege
+RUN chmod 600 /root/.ssh/id_rsa
