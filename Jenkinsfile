@@ -21,30 +21,30 @@ pipeline {
             }
         }
 
-        stage('Update mecheye device firmware') {
-            steps {
-                script {
-                    sh 'sudo dpkg -P mecheyeapi'
-                    sh "sudo dpkg -i /var/lib/jenkins/workspace/${DEB_PACKAGE}"
-                    sh "sudo mkdir -p /var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/build"
-                    sh "sudo cmake -S /var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/ -B /var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/build"
-                    sh "sudo make -C /var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/build"
-                    sh "/var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/build/UpgradeFirmwareUbuntu ${CAM_IP} ${LNX_IP}"
-                }
-            }
-        }
+        // stage('Update mecheye device firmware') {
+        //     steps {
+        //         script {
+        //             sh 'sudo dpkg -P mecheyeapi'
+        //             sh "sudo dpkg -i /var/lib/jenkins/workspace/${DEB_PACKAGE}"
+        //             sh "sudo mkdir -p /var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/build"
+        //             sh "sudo cmake -S /var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/ -B /var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/build"
+        //             sh "sudo make -C /var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/build"
+        //             sh "/var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/build/UpgradeFirmwareUbuntu ${CAM_IP} ${LNX_IP}"
+        //         }
+        //     }
+        // }
 
         stage('Parallel build Cpp Stages') {
             parallel {
-                stage('Build cpp amd64 samples') {
-                    steps {
-                        script {
-                            dockerRunAndExec('APISamplesBuildTest', 'mecheyeenvimage', [
-                                "sh /home/${WORKSPACE}/MechEyeCppBuildAmd/ubuntu_build.sh"
-                            ])
-                        }
-                    }
-                }
+                // stage('Build cpp amd64 samples') {
+                //     steps {
+                //         script {
+                //             dockerRunAndExec('APISamplesBuildTest', 'mecheyeenvimage', [
+                //                 "sh /home/${WORKSPACE}/MechEyeCppBuildAmd/ubuntu_build.sh"
+                //             ])
+                //         }
+                //     }
+                // }
 
                 stage('Build cpp amd64 test case') {
                     steps {
