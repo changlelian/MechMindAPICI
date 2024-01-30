@@ -3,7 +3,7 @@ pipeline {
 
         environment {
 
-        CAM_IP = '192.168.20.94'   // camera
+        CAM_IP = '192.168.20.2'   // camera
         LNX_IP = '192.168.20.219'   // profiler
         OTHER_IP = '192.168.20.159'    // profiler virtual
         DEB_PACKAGE = 'Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
