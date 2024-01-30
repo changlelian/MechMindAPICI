@@ -25,6 +25,9 @@ class TestCaseValid2DParameter(BaseTestCase):
 
     @data(*range(1, 9991, 9989))
     def test_case_2D_exposure_time(self, set_value):
+        """ Timed -> 2D exposure time"""
+        self.user_set.set_enum_value(Scanning2DExposureMode.name, Scanning2DExposureMode.Value_Timed)
+
         if self.camera_info.model not in self.config_file["exposure_2d_timed"]["exposure_4_to_996"]:
             set_value *= 0.1
             set_exposure_status = self.user_set.set_float_value(Scanning2DExposureTime.name, set_value)
@@ -36,6 +39,9 @@ class TestCaseValid2DParameter(BaseTestCase):
 
     @data(*range(4, 997, 4))
     def test_case_2D_exposure_time_4_to_996(self, set_value):
+        """ Timed -> 2D exposure time"""
+        self.user_set.set_enum_value(Scanning2DExposureMode.name, Scanning2DExposureMode.Value_Timed)
+
         if self.camera_info.model in self.config_file["exposure_2d_timed"]["exposure_4_to_996"]:
             set_exposure_status = self.user_set.set_float_value(Scanning2DExposureTime.name, set_value)
             get_exposure_status, get_value = self.user_set.get_float_value(Scanning2DExposureTime.name)
@@ -47,6 +53,9 @@ class TestCaseValid2DParameter(BaseTestCase):
     @data(*([[0.1] * i for i in range(1, 6)] + [[999] * i for i in range(1, 6)]))
     @unpack
     def test_case_2D_HDR_exposure_sequence(self, *set_value):
+        """ HDR -> 2D exposure time"""
+        self.user_set.set_enum_value(Scanning2DExposureMode.name, Scanning2DExposureMode.Value_HDR)
+
         if self.camera_info.model not in self.config_file["exposure_2d_HDR"]["exposure_4_to_996"]:
             set_sequence_status = self.user_set.set_float_array_value(Scanning2DHDRExposureSequence.name, set_value)
             get_sequence_status, get_value = self.user_set.get_float_array_value(Scanning2DHDRExposureSequence.name)
@@ -58,6 +67,9 @@ class TestCaseValid2DParameter(BaseTestCase):
     @data(*([[4] * i for i in range(1, 6)] + [[996] * i for i in range(1, 6)]))
     @unpack
     def test_case_2D_HDR_exposure_sequence_special(self, *set_value):
+        """ HDR -> 2D exposure time"""
+        self.user_set.set_enum_value(Scanning2DExposureMode.name, Scanning2DExposureMode.Value_HDR)
+
         if self.camera_info.model in self.config_file["exposure_2d_HDR"]["exposure_4_to_996"]:
             set_sequence_status = self.user_set.set_float_array_value(Scanning2DHDRExposureSequence.name, set_value)
             get_sequence_status, get_value = self.user_set.get_float_array_value(Scanning2DHDRExposureSequence.name)
@@ -68,6 +80,9 @@ class TestCaseValid2DParameter(BaseTestCase):
 
     @data(False, True)
     def test_case_scan_2D_tone_mapping_enable(self, set_value):
+        """ HDR -> 2D exposure time"""
+        self.user_set.set_enum_value(Scanning2DExposureMode.name, Scanning2DExposureMode.Value_HDR)
+
         set_mapping_status = self.user_set.set_bool_value(Scanning2DToneMappingEnable.name, set_value)
         get_mapping_status, get_value = self.user_set.get_bool_value(Scanning2DToneMappingEnable.name)
 
@@ -77,6 +92,9 @@ class TestCaseValid2DParameter(BaseTestCase):
 
     @data(*range(0, 256))
     def test_case_scan_2D_expected_gray_value(self, set_value):
+        """ Auto -> 2D exposure time"""
+        self.user_set.set_enum_value(Scanning2DExposureMode.name, Scanning2DExposureMode.Value_Auto)
+
         set_gray_status = self.user_set.set_int_value(Scanning2DExpectedGrayValue.name, set_value)
         get_gray_status, get_value = self.user_set.get_int_value(Scanning2DExpectedGrayValue.name)
 
@@ -117,6 +135,9 @@ class TestCaseValid2DParameter(BaseTestCase):
             self.assertEquals(set_value * 0.1, get_value)
 
     def test_case_scan_2D_roi(self):
+        """ Auto -> 2D exposure time"""
+        self.user_set.set_enum_value(Scanning2DExposureMode.name, Scanning2DExposureMode.Value_Auto)
+
         width = int(self.camera_resolution.texture.width)
         height = int(self.camera_resolution.texture.height)
         test_position_list = [[0, 0, width, height]] + \

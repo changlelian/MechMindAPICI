@@ -1,3 +1,5 @@
+import os
+
 from common import *
 from mecheye.shared import *
 from ddt import ddt, data, unpack
@@ -46,6 +48,7 @@ class TestCaseCaptureFrame2D(BaseTestCase):
         pass
 
     def test_case_save_point_cloud(self):
+        print(os.getcwd())
         disorder_ply_untextured_point_cloud = self.frame_3d.save_untextured_point_cloud(FileFormat_PLY, "files/disorder_untextured_point_cloud.ply")
         disorder_pcd_untextured_point_cloud = self.frame_3d.save_untextured_point_cloud(FileFormat_PCD, "files/disorder_untextured_point_cloud.pcd")
         disorder_csv_untextured_point_cloud = self.frame_3d.save_untextured_point_cloud(FileFormat_CSV, "files/disorder_untextured_point_cloud.csv")
@@ -63,6 +66,8 @@ class TestCaseCaptureFrame2D(BaseTestCase):
         self.assertTrue(show_status(order_csv_untextured_point_cloud))
 
     def test_case_save_point_cloud_with_normals(self):
+        print(os.getcwd())
+
         disorder_ply_untextured_normal_point_cloud = self.frame_3d.save_untextured_point_cloud_with_normals(FileFormat_PLY, "files/disorder_untextured_normal_point_cloud.ply")
         disorder_pcd_untextured_normal_point_cloud = self.frame_3d.save_untextured_point_cloud_with_normals(FileFormat_PCD, "files/disorder_untextured_normal_point_cloud.pcd")
         disorder_csv_untextured_normal_point_cloud = self.frame_3d.save_untextured_point_cloud_with_normals(FileFormat_CSV, "files/disorder_untextured_normal_point_cloud.csv")

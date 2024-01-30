@@ -85,6 +85,19 @@
     ]
   },
 
+  "frange_coding_mode":{
+    "reflective": [
+      "Mech-Eye LSR L",
+      "Mech-Eye LSR S",
+      "Mech-Eye PRO M",
+      "Mech-Eye PRO S"
+    ],
+    "translucent": [
+      "Mech-Eye PRO M",
+      "Mech-Eye PRO S"
+    ]
+  },
+
   "exposure_3d": {
     "exposure_4_to_96": [
       "Mech-Eye Laser L",
