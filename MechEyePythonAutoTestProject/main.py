@@ -20,10 +20,10 @@ if __name__ == '__main__':
     files_path = os.path.join(run_path, 'files')
 
     if not os.path.exists(report_path):
-        os.makedirs(report_path)
+        os.makedirs(report_path, exist_ok=True)
 
     if not os.path.exists(files_path):
-        os.makedirs(files_path)
+        os.makedirs(files_path, exist_ok=True)
 
     camera = Camera()
     profiler = Profiler()

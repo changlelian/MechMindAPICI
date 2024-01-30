@@ -2,6 +2,7 @@ import os
 from common import *
 from base_test_case import BaseTestCase
 
+project_path = os.path.dirname(os.path.dirname(__file__))
 
 class TestCaseValidCameraUserSets(BaseTestCase):
     default_user_set = "default"
@@ -85,12 +86,11 @@ class TestCaseValidCameraUserSets(BaseTestCase):
 
 class TestCaseValidSaveLoadFile(BaseTestCase):
     run_path = os.path.dirname(__file__)
-    file_name = os.path.join(run_path, 'file', 'test.json')
 
     def test_case_a_save_file(self):
-        save_status = self.user_set_manager.save_to_file(self.file_name)
+        save_status = self.user_set_manager.save_to_file(os.path.join(project_path, "testprofiler.json"))
         self.assertTrue(show_status(save_status))
 
     def test_case_b_load_file(self):
-        load_status = self.user_set_manager.load_from_file(self.file_name)
+        load_status = self.user_set_manager.load_from_file(os.path.join(project_path, "testprofiler.json"))
         self.assertTrue(show_status(load_status))

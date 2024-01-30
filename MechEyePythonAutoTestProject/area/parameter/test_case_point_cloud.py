@@ -52,7 +52,7 @@ class TestCaseValidPointCloudParameter(BaseTestCase):
           (GapFilling.Value_Strong, "Strong"))
     @unpack
     def test_case_point_cloud_gap_filling(self, set_mode_enum, set_mode_string):
-        if self.camera_info.model in self.config_file["frange_coding_mode"]["Translucent"]:
+        if self.camera_info.model in self.config_file["frange_coding_mode"]["translucent"]:
             self.user_set.set_enum_value(ProjectorFringeCodingMode.name, ProjectorFringeCodingMode.Value_Translucent)
 
             set_mode_status = self.user_set.set_enum_value(GapFilling.name, set_mode_enum)
@@ -67,7 +67,7 @@ class TestCaseValidPointCloudParameter(BaseTestCase):
           (PointCloudEdgePreservation.Value_Smooth, "Smooth"))
     @unpack
     def test_case_point_cloud_edge_preservation(self, set_mode_enum, set_mode_string):
-        if self.camera_info.model not in self.config_file["frange_coding_mode"]["Translucent"]:
+        if self.camera_info.model not in self.config_file["frange_coding_mode"]["translucent"]:
             self.user_set.set_enum_value(ProjectorFringeCodingMode.name, ProjectorFringeCodingMode.Value_Fast)
 
             set_mode_status = self.user_set.set_enum_value(PointCloudEdgePreservation.name, set_mode_enum)

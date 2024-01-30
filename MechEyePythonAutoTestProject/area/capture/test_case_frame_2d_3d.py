@@ -5,7 +5,8 @@ from ddt import ddt, data, unpack
 from base_test_case import BaseTestCase
 from mecheye.area_scan_3d_camera import *
 
-work_space = os.path.dirname(__file__)
+project_path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+
 
 class TestCaseCaptureFrame2D(BaseTestCase):
 
@@ -34,13 +35,14 @@ class TestCaseCaptureFrame2D(BaseTestCase):
         self.assertEquals(untextured_point_cloud.height(), self.camera_resolution.depth.height)
 
     def test_case_textured_save_point_cloud(self):
-        disorder_ply_textured_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud(FileFormat_PLY, "files/disorder_textured_point_cloud.ply")
-        disorder_pcd_textured_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud(FileFormat_PCD, "files/disorder_textured_point_cloud.pcd")
-        disorder_csv_textured_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud(FileFormat_CSV, "files/disorder_textured_point_cloud.csv")
 
-        order_ply_textured_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud(FileFormat_PLY, "files/order_textured_point_cloud.ply", True)
-        order_pcd_textured_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud(FileFormat_PCD, "files/order_textured_point_cloud.pcd", True)
-        order_csv_textured_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud(FileFormat_CSV, "files/order_textured_point_cloud.csv", True)
+        disorder_ply_textured_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud(FileFormat_PLY, os.path.join(project_path, "files", "disorder_textured_point_cloud.ply"))
+        disorder_pcd_textured_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud(FileFormat_PCD, os.path.join(project_path, "files", "disorder_textured_point_cloud.pcd"))
+        disorder_csv_textured_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud(FileFormat_CSV, os.path.join(project_path, "files", "disorder_textured_point_cloud.csv"))
+
+        order_ply_textured_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud(FileFormat_PLY, os.path.join(project_path, "files", "dorder_textured_point_cloud.ply"), True)
+        order_pcd_textured_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud(FileFormat_PCD, os.path.join(project_path, "files", "dorder_textured_point_cloud.pcd"), True)
+        order_csv_textured_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud(FileFormat_CSV, os.path.join(project_path, "files", "dorder_textured_point_cloud.csv"), True)
 
         self.assertTrue(show_status(disorder_ply_textured_point_cloud))
         self.assertTrue(show_status(disorder_pcd_textured_point_cloud))
@@ -51,13 +53,13 @@ class TestCaseCaptureFrame2D(BaseTestCase):
         self.assertTrue(show_status(order_csv_textured_point_cloud))
 
     def test_case_save_textured_point_cloud_with_normals(self):
-        disorder_ply_textured_normal_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud_with_normals(FileFormat_PLY, os.path.join(work_space, 'files', 'disorder_textured_normal_point_cloud.ply'))
-        disorder_pcd_textured_normal_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud_with_normals(FileFormat_PCD, os.path.join(work_space, 'files', 'disorder_textured_normal_point_cloud.pcd'))
-        disorder_csv_textured_normal_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud_with_normals(FileFormat_CSV, os.path.join(work_space, 'files', 'disorder_textured_normal_point_cloud.csv'))
+        disorder_ply_textured_normal_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud_with_normals(FileFormat_PLY, os.path.join(project_path, 'files', 'disorder_textured_normal_point_cloud.ply'))
+        disorder_pcd_textured_normal_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud_with_normals(FileFormat_PCD, os.path.join(project_path, 'files', 'disorder_textured_normal_point_cloud.pcd'))
+        disorder_csv_textured_normal_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud_with_normals(FileFormat_CSV, os.path.join(project_path, 'files', 'disorder_textured_normal_point_cloud.csv'))
 
-        order_ply_textured_normal_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud_with_normals(FileFormat_PLY, os.path.join(work_space, 'files', 'order_textured_normal_point_cloud.ply'), True)
-        order_pcd_textured_normal_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud_with_normals(FileFormat_PCD, os.path.join(work_space, 'files', 'order_textured_normal_point_cloud.pcd'), True)
-        order_csv_textured_normal_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud_with_normals(FileFormat_CSV, os.path.join(work_space, 'files', 'order_textured_normal_point_cloud.csv'), True)
+        order_ply_textured_normal_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud_with_normals(FileFormat_PLY, os.path.join(project_path, 'files', 'order_textured_normal_point_cloud.ply'), True)
+        order_pcd_textured_normal_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud_with_normals(FileFormat_PCD, os.path.join(project_path, 'files', 'order_textured_normal_point_cloud.pcd'), True)
+        order_csv_textured_normal_point_cloud = self.frame_2d_and_3d.save_textured_point_cloud_with_normals(FileFormat_CSV, os.path.join(project_path, 'files', 'order_textured_normal_point_cloud.csv'), True)
 
         self.assertTrue(show_status(disorder_ply_textured_normal_point_cloud))
         self.assertTrue(show_status(disorder_pcd_textured_normal_point_cloud))

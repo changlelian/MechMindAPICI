@@ -1,5 +1,8 @@
+import os
 from common import *
 from base_test_case import BaseTestCase
+
+project_path = os.path.dirname(os.path.dirname(__file__))
 
 
 class TestCaseValidCameraUserSets(BaseTestCase):
@@ -82,13 +85,14 @@ class TestCaseValidCameraUserSets(BaseTestCase):
         self.assertNotIn(self.new_user_set, user_sets)
 
 
+
+
 class TestCaseValidSaveLoadFile(BaseTestCase):
-    file_name = "files/test.json"
 
     def test_case_a_save_file(self):
-        save_status = self.user_set_manager.save_to_file(self.file_name)
+        save_status = self.user_set_manager.save_to_file(os.path.join(project_path, "test.json"))
         self.assertTrue(show_status(save_status))
 
     def test_case_b_load_file(self):
-        load_status = self.user_set_manager.load_from_file(self.file_name)
+        load_status = self.user_set_manager.load_from_file(os.path.join(project_path, "test.json"))
         self.assertTrue(show_status(load_status))
