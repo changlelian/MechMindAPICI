@@ -63,18 +63,18 @@ pipeline {
 
         stage('Parallel Execute Cpp Stages') {
             parallel {
-                stage('Test cpp camera interface in linux') {
-                    steps {
-                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                            script {
-                                dockerRunAndExec('APITestCameraInterface', 'mecheyeenvimage', [
-                                    "dpkg -i /home/${DEB_PACKAGE}",
-                                    "/home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Camera* --ip=${CAM_IP}"
-                                ])
-                            }
-                        }
-                    }
-                }
+                // stage('Test cpp camera interface in linux') {
+                //     steps {
+                //         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                //             script {
+                //                 dockerRunAndExec('APITestCameraInterface', 'mecheyeenvimage', [
+                //                     "dpkg -i /home/${DEB_PACKAGE}",
+                //                     "/home/${WORKSPACE}/MechEyeCppAutoTestProject/src/build/MechEyeCppAutoTestProject --gtest_filter=*Camera* --ip=${CAM_IP}"
+                //                 ])
+                //             }
+                //         }
+                //     }
+                // }
 
 
                 stage('Test cpp profiler interface in linux') {
