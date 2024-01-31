@@ -295,11 +295,10 @@ TEST_F(CameraCouplingParameters, TestUHPCaptureMode) {
 
     testStautsSuccessful(us.setRoiValue(mmind::eye::scanning3d_setting::ROI::name, roi));
 
-    // not available
     testStautsSuccessful(us.setEnumValue(mmind::eye::uhp_setting::CaptureMode::name,
         static_cast<int>(mmind::eye::uhp_setting::CaptureMode::Value::Merge)));
 
-    testStautsFailed(us.setRoiValue(mmind::eye::scanning3d_setting::ROI::name, roi));
+    testStautsSuccessful(us.setRoiValue(mmind::eye::scanning3d_setting::ROI::name, roi));
 }
 
 /**
