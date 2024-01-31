@@ -25,7 +25,7 @@ TEST_P(ProfilerParameterExposureTime, ExposureTime) {
     switch (modeMap.second)
     {
     case 0:
-        std::cout << "wei wan cheng " << std::endl;
+        //std::cout << "wei wan cheng " << std::endl;
         break;
     case 1:
         testEnumValue(profiler, brightness_settings::ExposureMode::name, std::make_pair("Timed", 1));

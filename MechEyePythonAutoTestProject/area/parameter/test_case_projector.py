@@ -36,15 +36,16 @@ class TestCaseValidProjectorParameter(BaseTestCase):
     def test_case_projector_fringe_coding_mode(self, set_mode_enum, set_mode_string):
         if self.camera_info.model not in self.config_file["projector_coding_mode_camera"]:
             return
+
         if set_mode_enum == ProjectorFringeCodingMode.Value_Fast or \
                 set_mode_enum == ProjectorFringeCodingMode.Value_Accurate:
             self.set_and_get_mode(set_mode_enum)
 
-        if self.camera_info.model in self.config_file["frange_coding_mode"]["Translucent"] and \
+        if self.camera_info.model in self.config_file["frange_coding_mode"]["translucent"] and \
                 set_mode_enum != ProjectorFringeCodingMode.Value_Reflective:
             self.set_and_get_mode(set_mode_enum)
 
-        if self.camera_info.model in self.config_file["frange_coding_mode"]["translucent"] and \
+        if self.camera_info.model in self.config_file["frange_coding_mode"]["reflective"] and \
                 set_mode_enum != ProjectorFringeCodingMode.Value_Translucent:
             self.set_and_get_mode(set_mode_enum)
 
