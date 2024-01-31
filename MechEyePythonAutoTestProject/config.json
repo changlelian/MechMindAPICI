@@ -114,6 +114,12 @@
   "analog_gain": {
     "gain_for_8030": [
       "Mech-Eye LNX-8030"
+    ],
+    "gain_1_5":[
+      "Mech-Eye LNX-8030",
+      "Mech-Eye LNX-8080",
+      "Mech-Eye LNX-75300",
+      "Mech-Eye LNX-7580"
     ]
   },
   "version": "1.0.0"

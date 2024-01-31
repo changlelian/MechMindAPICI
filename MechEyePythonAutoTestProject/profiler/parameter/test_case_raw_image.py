@@ -20,15 +20,26 @@ class TestCaseScanParameter(BaseTestCase):
         self.assertEquals(set_mode_enum, get_mode_enum)
         self.assertEquals(set_mode_string, get_mode_string)
 
-    @data((AnalogGain.Value_Gain_1_0, "Gain_1_0"),
-          (AnalogGain.Value_Gain_1_3, "Gain_1_3"),
-          (AnalogGain.Value_Gain_1_9, "Gain_1_9"),
-          (AnalogGain.Value_Gain_2_8, "Gain_2_8"),
-          (AnalogGain.Value_Gain_5_5, "Gain_5_5"))
+    @data((AnalogGain.Value_Gain_1, "Gain_1"),
+          (AnalogGain.Value_Gain_2, "Gain_2"),
+          (AnalogGain.Value_Gain_3, "Gain_3"),
+          (AnalogGain.Value_Gain_4, "Gain_4"),
+          (AnalogGain.Value_Gain_5, "Gain_5"))
     @unpack
     def test_case_analog_gain(self, set_mode_enum, set_mode_string):
-        if self.profiler_info.model not in self.config_file["analog_gain"]["gain_for_8030"][0]:
-            print(self.config_file["analog_gain"]["gain_for_8030"][0], self.profiler_info.model)
+        if self.profiler_info.model not in self.config_file["analog_gain"]["gain_1_5"] and \
+                set_mode_enum != AnalogGain.Value_Gain_5:
+
+            set_mode_status = self.user_set.set_enum_value(AnalogGain.name, set_mode_enum)
+            get_mode_status, get_mode_enum = self.user_set.get_enum_value(AnalogGain.name)
+            get_string_status, get_mode_string = self.user_set.get_enum_value_string(AnalogGain.name)
+
+            self.assertTrue(show_status(set_mode_status))
+            self.assertTrue(show_status(get_mode_status))
+            self.assertTrue(show_status(get_string_status))
+            self.assertEquals(set_mode_enum, get_mode_enum)
+            self.assertEquals(set_mode_string, get_mode_string)
+        else:
             set_mode_status = self.user_set.set_enum_value(AnalogGain.name, set_mode_enum)
             get_mode_status, get_mode_enum = self.user_set.get_enum_value(AnalogGain.name)
             get_string_status, get_mode_string = self.user_set.get_enum_value_string(AnalogGain.name)
