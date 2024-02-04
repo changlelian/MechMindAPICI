@@ -1,6 +1,9 @@
 pipeline {
-    agent any
-
+    // agent any
+    agent {
+        label 'mm_amd64'
+    }
+    
     // triggers {
     //     cron('H 1,7,23 * * *')
     // }
@@ -9,7 +12,7 @@ pipeline {
 
         CAM_IP = '192.168.20.139'   // camera
         LNX_IP = '192.168.20.13'   // profiler
-        OTHER_IP = '192.168.20.159'    // profiler virtual
+        // OTHER_IP = '192.168.20.159'    // profiler virtual
         DEB_PACKAGE = 'Mech-Eye_API_2.3.0_amd64.deb'  // cpp package
         WHEEL_PACKAGE = 'MechEyeAPI-2.3.0-cp38-cp38-manylinux_2_27_x86_64.whl'  // wheel python3.8
 
