@@ -41,6 +41,8 @@ class TestCaseScanParameter(BaseTestCase):
           (EncoderTriggerDirection.Value_Both, "Both"))
     @unpack
     def test_case_encoder_trigger_direction(self, set_mode_enum, set_mode_string):
+        self.user_set.set_enum_value(LineScanTriggerSource.name, LineScanTriggerSource.Value_Encoder)
+
         set_mode_status = self.user_set.set_enum_value(EncoderTriggerDirection.name, set_mode_enum)
         get_mode_status, get_mode_enum = self.user_set.get_enum_value(EncoderTriggerDirection.name)
         get_string_status, get_mode_string = self.user_set.get_enum_value_string(EncoderTriggerDirection.name)
@@ -56,6 +58,8 @@ class TestCaseScanParameter(BaseTestCase):
           (EncoderTriggerSignalCountingMode.Value_Multiple_4, "Multiple_4"))
     @unpack
     def test_case_encoder_trigger_direction(self, set_mode_enum, set_mode_string):
+        self.user_set.set_enum_value(LineScanTriggerSource.name, LineScanTriggerSource.Value_Encoder)
+
         set_mode_status = self.user_set.set_enum_value(EncoderTriggerSignalCountingMode.name, set_mode_enum)
         get_mode_status, get_mode_enum = self.user_set.get_enum_value(EncoderTriggerSignalCountingMode.name)
         get_string_status, get_mode_string = self.user_set.get_enum_value_string(EncoderTriggerSignalCountingMode.name)
@@ -67,6 +71,8 @@ class TestCaseScanParameter(BaseTestCase):
         self.assertEquals(set_mode_string, get_mode_string)
 
     def test_case_software_trigger_rate(self):
+        self.user_set.set_enum_value(LineScanTriggerSource.name, LineScanTriggerSource.Value_FixedRate)
+
         parameter_pointer = self.user_set.get_parameter(SoftwareTriggerRate.name)
         para = FloatParameter.convert_from_parameter(parameter_pointer)
         unit_status, unit = para.get_unit()
@@ -116,6 +122,8 @@ class TestCaseScanParameter(BaseTestCase):
 
     @data(*range(1, 65536, 65534))
     def test_case_encoder_trigger_interval(self, set_value):
+        self.user_set.set_enum_value(LineScanTriggerSource.name, LineScanTriggerSource.Value_Encoder)
+
         set_status = self.user_set.set_int_value(EncoderTriggerInterval.name, set_value)
         get_status, get_value = self.user_set.get_int_value(EncoderTriggerInterval.name)
 

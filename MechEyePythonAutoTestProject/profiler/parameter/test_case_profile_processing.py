@@ -43,6 +43,8 @@ class TestCaseScanParameter(BaseTestCase):
           (MeanFilterWindowSize.Value_WindowSize_32, "WindowSize_32"))
     @unpack
     def test_case_mean_filter_window_size(self, set_mode_enum, set_mode_string):
+        set_mode_status = self.user_set.set_enum_value(Filter.name, Filter.Value_Mean)
+
         set_mode_status = self.user_set.set_enum_value(MeanFilterWindowSize.name, set_mode_enum)
         get_mode_status, get_mode_enum = self.user_set.get_enum_value(MeanFilterWindowSize.name)
         get_string_status, get_mode_string = self.user_set.get_enum_value_string(MeanFilterWindowSize.name)
@@ -59,6 +61,8 @@ class TestCaseScanParameter(BaseTestCase):
           (MedianFilterWindowSize.Value_WindowSize_9, "WindowSize_9"))
     @unpack
     def test_case_median_filter_window_size(self, set_mode_enum, set_mode_string):
+        set_mode_status = self.user_set.set_enum_value(Filter.name, Filter.Value_Median)
+
         set_mode_status = self.user_set.set_enum_value(MedianFilterWindowSize.name, set_mode_enum)
         get_mode_status, get_mode_enum = self.user_set.get_enum_value(MedianFilterWindowSize.name)
         get_string_status, get_mode_string = self.user_set.get_enum_value_string(MedianFilterWindowSize.name)
