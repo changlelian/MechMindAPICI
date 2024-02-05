@@ -127,6 +127,8 @@ class TestCaseValid2DParameter(BaseTestCase):
     @data(*range(1, 9991, 9989))
     def test_case_scan_2D_depth_exposure_time(self, set_value):
         if self.camera_info.model in self.config_file["pattern_role_camera"]:
+            self.user_set.set_enum_value(Scanning2DDepthSourceExposureMode.name, Scanning2DDepthSourceExposureMode.Value_Timed)
+            
             set_exposure_status = self.user_set.set_float_value(Scanning2DDepthSourceExposureTime.name, set_value * 0.1)
             get_exposure_status, get_value = self.user_set.get_float_value(Scanning2DDepthSourceExposureTime.name)
 
