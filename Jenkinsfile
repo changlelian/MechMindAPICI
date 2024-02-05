@@ -32,6 +32,7 @@ pipeline {
             steps {
                 script {
                     sh 'sudo dpkg -P mecheyeapi'
+                    sh 'sudo rm -rf /opt/mech-mind'
                     sh "sudo dpkg -i /var/lib/jenkins/workspace/${DEB_PACKAGE}"
                     sh "sudo mkdir -p /var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/build"
                     sh "sudo cmake -S /var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/ -B /var/lib/jenkins/workspace/${WORKSPACE}/UpgradeFirmwareLinux/build"
